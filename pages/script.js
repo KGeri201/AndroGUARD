@@ -15,7 +15,7 @@ document.getElementById('startRecording').addEventListener('click', function() {
             document.getElementById('startRecording').innerText = 'Start Recording';
             downloadCSV();
         }
-    }, 100); // Collect measurements every 100 ms
+    }, 5); // Collect measurements every 5 ms
 });
 
 function downloadCSV() {
