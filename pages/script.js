@@ -7,7 +7,7 @@ document.getElementById('startRecording').addEventListener('click', function() {
     measurements = [];
     document.getElementById('startRecording').innerText = 'Recording...';
 
-    const maxMeasurements = 600;
+    const maxMeasurements = 60 / 0.005;
     let interval = setInterval(function() {
         if (measurements.length >= maxMeasurements) {
             clearInterval(interval);
