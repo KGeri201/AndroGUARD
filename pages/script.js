@@ -24,7 +24,7 @@ function downloadCSV() {
     csvContent += "accelX,accelY,accelZ,gyroAlpha,gyroBeta,gyroGamma\n";
 
     measurements.forEach(function(measurement) {
-        let row = measurement.join(",");
+        let row = measurement.join(";");
         csvContent += row + "\n";
     });
 
