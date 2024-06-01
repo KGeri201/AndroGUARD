@@ -7,8 +7,7 @@ document.getElementById('startRecording').addEventListener('click', function() {
     measurements = [];
     document.getElementById('startRecording').innerText = 'Recording...';
 
-    // Stop recording after collecting 100 measurements
-    const maxMeasurements = 100;
+    const maxMeasurements = 600;
     let interval = setInterval(function() {
         if (measurements.length >= maxMeasurements) {
             clearInterval(interval);
