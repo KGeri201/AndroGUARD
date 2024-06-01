@@ -7,7 +7,7 @@ document.getElementById('startRecording').addEventListener('click', function() {
     measurements = [];
     document.getElementById('startRecording').innerText = 'Recording...';
 
-    const maxMeasurements = 60 / 0.005;
+    const maxMeasurements = 600;
     let interval = setInterval(function() {
         if (measurements.length >= maxMeasurements) {
             clearInterval(interval);
@@ -15,7 +15,7 @@ document.getElementById('startRecording').addEventListener('click', function() {
             document.getElementById('startRecording').innerText = 'Start Recording';
             downloadCSV();
         }
-    }, 5); // Collect measurements every 5 ms
+    }, 100); // Collect measurements every 100 ms
 });
 
 function downloadCSV() {
