@@ -47,9 +47,9 @@ function collectData(accel, gyro) {
 if (window.DeviceMotionEvent) {
     window.addEventListener('devicemotion', function(event) {
         const accel = event.accelerationIncludingGravity;
-        document.getElementById('accelX').innerText = accel.x.toFixed(2);
-        document.getElementById('accelY').innerText = accel.y.toFixed(2);
-        document.getElementById('accelZ').innerText = accel.z.toFixed(2);
+        document.getElementById('accelX').innerText = accel.x;
+        document.getElementById('accelY').innerText = accel.y;
+        document.getElementById('accelZ').innerText = accel.z;
 
         const gyro = {
             alpha: 0,
@@ -66,9 +66,9 @@ if (window.DeviceMotionEvent) {
 // Check if DeviceOrientationEvent is supported
 if (window.DeviceOrientationEvent) {
     window.addEventListener('deviceorientation', function(event) {
-        document.getElementById('gyroAlpha').innerText = event.alpha.toFixed(2);
-        document.getElementById('gyroBeta').innerText = event.beta.toFixed(2);
-        document.getElementById('gyroGamma').innerText = event.gamma.toFixed(2);
+        document.getElementById('gyroAlpha').innerText = event.alpha;
+        document.getElementById('gyroBeta').innerText = event.beta;
+        document.getElementById('gyroGamma').innerText = event.gamma;
 
         const accel = {
             x: parseFloat(document.getElementById('accelX').innerText),
