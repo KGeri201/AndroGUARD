@@ -24,6 +24,9 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
+    - name: set up a2p2
+      run: curl -sS https://extgit.iaik.tugraz.at/fdraschbacher/a2p2/-/raw/main/a2p2_distribution_v1.0.1.zip?ref_type=heads&inline=false > a2p2_distribution.zip && unzip a2p2_distribution.zip && rm a2p2_distribution.zip 
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
