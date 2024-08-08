@@ -31,3 +31,56 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+# Core latex/pdflatex auxiliary files:
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
+*.nav
+*.pre
+*.snm
+*.vrb
+
+# Bibliography auxiliary files (bibtex/biblatex/biber):
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*-blx.bib
+*.run.xml
+
+## Tex build tool auxiliary files:
+*.fdb_latexmk
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+plot.py
+
+# Custom
+local/
+a2p2/
+output/
+testing/
+in/
+pages/
+
+# IDE
+.idea/
+.vscode/
