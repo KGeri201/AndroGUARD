@@ -32,3 +32,9 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew assemblePatchPackages
+
+    - name: Archive built package
+      uses: actions/upload-artifact@v4
+      with:
+        name: static-patch
+        path: ./app/build/outputs/patch/patch_static.zip
