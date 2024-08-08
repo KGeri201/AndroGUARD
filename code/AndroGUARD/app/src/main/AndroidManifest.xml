@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:patch="http://schemas.android.com/apk/res-auto"
+    package="com.androguard">
+
+    <patch:add sel="manifest">
+        <meta-data android:name="patched" android:value="true" />
+    </patch:add>
+</manifest>

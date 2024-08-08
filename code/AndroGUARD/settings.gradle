@@ -1,0 +1,37 @@
+pluginManagement {
+    buildscript {
+        repositories {
+            gradlePluginPortal()
+            google()
+            mavenCentral()
+            flatDir {
+                dirs '../a2p2/distribution'
+            }
+        }
+        dependencies {
+            classpath ':a2p2_gradle_plugin:1.0.0'
+        }
+    }
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.name = "AndroGUARD"
+include ':app'
