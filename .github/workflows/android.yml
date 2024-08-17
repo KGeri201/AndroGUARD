@@ -8,7 +8,7 @@ on:
 
 defaults:
   run:
-    working-directory: ./code/AndroGUARD
+    working-directory: code/AndroGUARD
 
 jobs:
   build:
@@ -17,18 +17,24 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: set up JDK 11
+    - name: set up JDK 17
       uses: actions/setup-java@v4
       with:
-        java-version: '11'
+        java-version: '17'
         distribution: 'temurin'
         cache: gradle
 
     - name: set up a2p2
-      run: curl -sS https://extgit.iaik.tugraz.at/fdraschbacher/a2p2/-/raw/main/a2p2_distribution_v1.0.1.zip > a2p2.zip && unzip a2p2.zip -d ../a2p2 && rm a2p2.zip 
-      working-directory: ../
+      run: curl -sS https://extgit.iaik.tugraz.at/fdraschbacher/a2p2/-/raw/main/a2p2_distribution_v1.0.1.zip > a2p2.zip && unzip a2p2.zip -d a2p2 && rm a2p2.zip 
+      working-directory: code/
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew assemblePatchPackages
+
+    - name: Archive built package
+      uses: actions/upload-artifact@v4
+      with:
+        name: static-patch
+        path: code/AndroGUARD/app/build/outputs/patch/patch_static.zip
