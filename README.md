@@ -6,12 +6,12 @@ Patching apps with the created mechanism, using the [A2P2 Framework](https://ext
 
 ## Concept
 
-The [PatchManager](./AndroGUARD/app/src/main/java/com/androguard/PatchManager.java) class replaces all of the registerListener methods of the [SensorManager](https://developer.android.com/reference/android/hardware/SensorManager) class.
+The [PatchManager](./code/AndroGUARD/app/src/main/java/com/androguard/PatchManager.java) class replaces all of the registerListener methods of the [SensorManager](https://developer.android.com/reference/android/hardware/SensorManager) class.
 By intercepting calls to this methods we can replace the registered [SensorEventListener](https://developer.android.com/reference/android/hardware/SensorEventListener) objects with ours.
-When a [SensorEvent](https://developer.android.com/reference/android/hardware/SensorEvent) is triggered our onSensorChanged method of our [PatchListener](./AndroGUARD/app/src/main/java/com/androguard/PatchListener.java) is executed.
+When a [SensorEvent](https://developer.android.com/reference/android/hardware/SensorEvent) is triggered our onSensorChanged method of our [PatchListener](./code/AndroGUARD/app/src/main/java/com/androguard/PatchListener.java) is executed.
 This method manipulates the values of the received SensorEvent by applying an obscuring noise, before passing them to the original SensorEventListener, which is stored inside this class.
 
-The noise is generated in the [Patch](./AndroGUARD/app/src/main/java/com/androguard/Patch.java) class by applying a random offset and gain from a previously determined range to the original value.
+The noise is generated in the [Patch](./code/AndroGUARD/app/src/main/java/com/androguard/Patch.java) class by applying a random offset and gain from a previously determined range to the original value.
 
 To maintain full functionality, also the unregisterListener methods of the SensorManager are intercepted.
 
@@ -21,7 +21,7 @@ To maintain full functionality, also the unregisterListener methods of the Senso
   
 ## Apply patch to an app
 1. Download the latest [distribution](https://extgit.iaik.tugraz.at/fdraschbacher/a2p2/-/blob/main/a2p2_distribution_v1.0.1.zip?ref_type=heads) release from A2P2 and extract it.
-2. Download the [precompiled version](./androguard_static.zip) of the patch.
+2. Download the [precompiled version](./code/androguard_static.zip) of the patch.
 3. Execute the command from the [A2P2 documentation](https://extgit.iaik.tugraz.at/fdraschbacher/a2p2/-/tree/main/distribution/docs?ref_type=heads)
     ```bash
     java -jar ./distribution/a2p2.jar <app>.apk ! unpack ! apply androguard_static.zip static ! pack ! sign ! ./
