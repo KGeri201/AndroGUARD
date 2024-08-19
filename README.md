@@ -1,6 +1,6 @@
 # AndroGUARD
 
-It is my bachelor's project and thesis.
+It is my bachelor's project and thesis.  
 It is about concealing the inherent error values of built-in sensors in mobile devices to mitigate fingerprinting attempts.
 Patching apps with the created mechanism, using the [A2P2 Framework](https://extgit.iaik.tugraz.at/fdraschbacher/a2p2), obscures the true error values.
 
