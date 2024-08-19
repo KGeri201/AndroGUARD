@@ -40,7 +40,7 @@ The validation of the patch is done by splitting the gathered data, and training
 [KGeri201](https://github.com/KGeri201)
 
 ## License
-[MIT](LICENSE)
+[MIT License](LICENSE)
 
 ## Project status
 In development.
