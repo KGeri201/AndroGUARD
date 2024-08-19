@@ -1,5 +1,9 @@
 # AndroGUARD
 
+My bachelor's project and thesis.  
+It is about concealing the inherent error values of built-in sensors in mobile devices to mitigate fingerprinting attempts.
+Patching apps with the created mechanism, using the [A2P2 Framework](https://extgit.iaik.tugraz.at/fdraschbacher/a2p2), obscures the true error values.
+
 ## Concept
 
 The [PatchManager](./AndroGUARD/app/src/main/java/com/androguard/PatchManager.java) class replaces all of the registerListener methods of the [SensorManager](https://developer.android.com/reference/android/hardware/SensorManager) class.
@@ -30,4 +34,13 @@ To maintain full functionality, also the unregisterListener methods of the Senso
 3. [Build the patch](https://extgit.iaik.tugraz.at/fdraschbacher/a2p2/-/blob/main/distribution/docs/developing_patches.md?ref_type=heads#building-patches) from source.
 
 ## Validation
-The validation of the patch is done by splitting the gathered data, and training a classification algorithm with the training data and then checking its accuracy against the test set.  
+The validation of the patch is done by splitting the gathered data, and training a classification algorithm with the training data and then checking its accuracy against the test set.
+
+## Credits
+[KGeri201](https://github.com/KGeri201)
+
+## License
+[MIT License](LICENSE)
+
+## Project status
+In development.
