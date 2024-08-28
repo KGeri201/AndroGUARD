@@ -10,7 +10,7 @@ Patching apps with the created mechanism, using the [A2P2 Framework](https://ext
 
 **Study programme**: Software Engineering and Management
 
-**Course**:          Bachelor's thesis (LV number, X ECTS) / Bachelor project (LV number, X ECTS)
+**Course**:          Bachelor's thesis (700.402, 7 ECTS) / Bachelor project (700.404, 7 ECTS)
 
 **Advisor**:         Gerald Palfinger
 
