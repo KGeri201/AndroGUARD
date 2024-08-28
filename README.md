@@ -6,18 +6,18 @@ Patching apps with the created mechanism, using the [A2P2 Framework](https://ext
 
 ## Description
 
-Student:         Gergö Kranz
-Study programme: Software Engineering and Management
-Course:          Bachelor's thesis (LV number, X ECTS) / Bachelor project (LV number, X ECTS)
-Advisor:         Gerald Palfinger
-Project goals:   Implement a patch for the android api to mitigate sensor based fingerprinting.
-Project status:
+Student:         Gergö Kranz  
+Study programme: Software Engineering and Management  
+Course:          Bachelor's thesis (LV number, X ECTS) / Bachelor project (LV number, X ECTS)  
+Advisor:         Gerald Palfinger  
+Project goals:   Implement a patch for the android api to mitigate sensor based fingerprinting.  
+Project status:  
 
-Started on 20.03.2024
+Started on 20.03.2024  
 
-Presentation on ...
+Presentation on ...  
 
-Completed on ...
+Completed on ...  
 
 ## Concept
 
