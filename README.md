@@ -4,6 +4,21 @@ My bachelor's project and thesis.
 It is about concealing the inherent error values of built-in sensors in mobile devices to mitigate fingerprinting attempts.
 Patching apps with the created mechanism, using the [A2P2 Framework](https://extgit.iaik.tugraz.at/fdraschbacher/a2p2), obscures the true error values.
 
+## Description
+
+Student:         Gergö Kranz
+Study programme: Software Engineering and Management
+Course:          Bachelor's thesis (LV number, X ECTS) / Bachelor project (LV number, X ECTS)
+Advisor:         Gerald Palfinger
+Project goals:   Implement a patch for the android api to mitigate sensor based fingerprinting.
+Project status:
+
+Started on 20.03.2024
+
+Presentation on ...
+
+Completed on ...
+
 ## Concept
 
 The [PatchManager](./code/AndroGUARD/app/src/main/java/com/androguard/PatchManager.java) class replaces all of the registerListener methods of the [SensorManager](https://developer.android.com/reference/android/hardware/SensorManager) class.
