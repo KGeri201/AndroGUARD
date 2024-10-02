@@ -187,10 +187,10 @@ Multiple papers have been published on fingerprinting sensors in Android devices
 These studies demonstrate that the measurement errors inherent in these sensors are unique to each device, creating a distinctive fingerprint \cite{DBLP:conf/ccs/0001ABP18, DBLP:journals/tifs/AmeriniBCMN17}. 
 Furthermore, they show that these errors are consistent and stable over the lifetime of the sensor, making them reliable indicators for identifying and tracking individual devices. 
 This consistency in sensor errors highlights the potential privacy risks associated with sensor fingerprinting, as it allows for the persistent and unique identification of devices based solely on their hardware characteristics.
-While these papers has highlighted the problem there is currently no mitigation implemented in Android.
+While these papers highlighted the problem there is currently no mitigation implemented in Android.
 
-Our implementation AndroGUARD builds on suggestions from some of the research papers which covered this issue \cite{DBLP:conf/ndss/DasBC16, DBLP:journals/tifs/AmeriniBCMN17, DBLP:conf/ccs/0001ABP18}. 
-To apply our implementation in other applications we use the Android Application Patching Pipeline, short A2P2, for easy deployment \cite{DBLP:conf/IEEEares/Draschbacher23}.
+Our implementation of AndroGUARD builds on suggestions from some of the research papers which covered this issue \cite{DBLP:conf/ndss/DasBC16, DBLP:journals/tifs/AmeriniBCMN17, DBLP:conf/ccs/0001ABP18}. 
+To implement and deploy our mitigation we use the Android Application Patching Pipeline, short A2P2, for easy deployment \cite{DBLP:conf/IEEEares/Draschbacher23}.
 By integrating these recommended strategies into our patch, we aim to effectively obfuscate sensor data and prevent the extraction of identifiable information \cite{DBLP:conf/ndss/DasBC16}. 
 By introducing random variations to sensor outputs, we can obscure unique error patterns, making it more challenging for adversaries to reliably fingerprint and track devices \cite{DBLP:journals/tifs/AmeriniBCMN17}. 
 Our approach not only addresses the vulnerabilities highlighted in the literature but also provides practical solutions to enhance the privacy and security of Android users.
@@ -202,7 +202,7 @@ Building on this information, in chapter \ref{chap:methodology} we examine exist
 Chapter \ref{chap:approach} investigates the mitigation concepts presented in prior research, understanding relevant literature for our implementation of the selected mitigation strategy.
 Following this, chapter \ref{chap:implementation} provides a detailed breakdown of the patch creation process, including integration with the A2P2 framework and key functionalities such as the intercept method and noise generation. 
 We then outline the step-by-step process of applying the patch to APKs in chapter \ref{chap:applying}. 
-Chapter \ref{chap:validaton} shifts focus to validating the effectiveness of the patch, detailing the testing methodology, results, and areas for further improvement. 
+Chapter \ref{chap:evaluation} shifts focus to validating the effectiveness of the patch, detailing the testing methodology, results, and areas for further improvement. 
 Finally, chapter \ref{chap:conclusion} summarizes our findings, reflects on the implications of the project, and outline directions for future research and development.
 
 % You may want to keep your chapters in separate files ('chapterfilename.tex')
@@ -231,13 +231,13 @@ These attributes can be combined to create a unique identifier for the device.
 There are multiple different methods applied by an adversary as described in a paper by \citeauthor{DBLP:conf/ntms/UpathilakeLM15} \cite{DBLP:conf/ntms/UpathilakeLM15}.
 An adversary can fingerprint the browser by checking the browser version, installed fonts and other browser specific attributes or the HTML5 by rendering text and WebGL scenes onto the screen using the canvas element, and then reading the pixel data back to create a fingerprint.
 They can also use JavaScript to create cross-browser fingerprints, which are browser independent and focus more on the hardware the browser is running on, like screen resolution or networking information.
-With the use of JavaScript one can also access sensor data, like an accelerometers calibration imperfections, to create a such fingerprint.
+With the use of JavaScript one can also access sensor data, like an accelerometers calibration imperfections, to create a fingerprint.
 
 \paragraph{Browser fingerprinting protections.}
 \label{par:browser_fingerprint_protect}
-A number of solutions are already presented by multiple research papers, to identify and block fingerprinting websites, making browsing the internet more private for everyone. 
+A number of solutions are already presented by multiple research papers, to identify and block fingerprinting efforts, making browsing the internet more private for everyone. 
 JShelter \cite{DBLP:conf/secrypt/PolcakSMHM23} blocks the execution of JavaScript to mitigate the gathering of personal data used for fingerprinting to increase browser security.
-An other research, PriVaricator \cite{DBLP:conf/www/NikiforakisJL15} focusses on making the fingerprints non-deterministic, by introducing randomization to break identifiability when visiting an the same website multiple times.
+An other research, PriVaricator \cite{DBLP:conf/www/NikiforakisJL15} focusses on making the fingerprints non-deterministic, by introducing randomization to break identifiability when visiting websites multiple times.
 These research projects can create some problems with embedded functionalities.
 To solve this issue FP-Block \cite{DBLP:conf/esorics/TorresJM15} creates a different unrelated fingerprint for the embedded resources to maintain their functionality, but prevent tracking.
 
@@ -262,11 +262,11 @@ When enforced with user education this permission model empowers the owner of th
 
 \chapter{Sensor Fingerprinting}
 \label{chap:sensor_fingerprint}
-In this thesis, our central focus is the complex problem of sensor fingerprinting present in a wide range of Android devices \cite{DBLP:journals/comsur/BaldiniS17}. 
+In this thesis, our central focus is the complex problem of sensor fingerprinting applicable to a wide range of Android devices \cite{DBLP:journals/comsur/BaldiniS17}. 
 Sensors embedded within smartphones and tablets serve as the foundation for an extensive array of functionalities, spanning from location tracking and environmental monitoring to augmented reality experiences and health tracking applications. 
 However, these features create a potential vulnerability regarding the sensor data, if exploited through fingerprinting techniques, can jeopardize user privacy and security \cite{DBLP:conf/ndss/MengZXZZBLTD23}.
 
-It has been proven by multiple research papers that the built-in error of sensors remains consistent over the lifetime of the device \cite{DBLP:conf/sp/ZhangBS19, DBLP:conf/ndss/DeyRXCN14}. 
+It has been shown by multiple research papers that the built-in error of sensors remains consistent over the lifetime of the device \cite{DBLP:conf/sp/ZhangBS19, DBLP:conf/ndss/DeyRXCN14}. 
 This inherent characteristic of sensors, stemming from manufacturing imperfections and the initial calibration, results in a unique and persistent signature that does not change significantly over time. 
 Studies have demonstrated that these discrepancies can be reliably measured and used to fingerprint individual devices, posing a significant threat to user privacy. 
 This stability of sensor errors forms the basis for sensor fingerprinting techniques, highlighting the need for effective countermeasures to disrupt these patterns and protect against unauthorized tracking and identification.
@@ -294,11 +294,11 @@ Not only can mobile applications access sensors through the Android API, but web
 This extension of sensor access to web-based platforms presents additional challenges and considerations for privacy and security.
 With the broad range of web technologies such as the \verb|DeviceOrientation| and \verb|DeviceMotion| APIs, web developers can access sensor data directly from the browser, enabling a wide range of sensor-based interactions within web applications \cite{DBLP:journals/popets/DasBC18}.
 While this capability unlocks new possibilities for immersive web experiences, it also introduces potential risks, as websites can collect sensitive sensor data without explicit user consent.
-If the installed browser application has permissions to access sensor data, so do the websites viewed within the application
+If the installed browser application has permissions to access sensor data, so do the websites viewed within the application.
 These websites may access sensor data without notifying users, raising concerns about unauthorized data collection and privacy infringement.
 Additionally, the diverse nature of web environments and the multitude of devices accessing them present challenges in ensuring consistent and secure sensor data handling across different platforms and browsers.
-To protect against fingerprinting inside browser applications one can apply the same protection as for any other android applications.
-By modifying the Android API queries before they reach the browser application, one can manipulate the values, queried by JavaScript inside the browser sent to the system.
+To protect against fingerprinting inside browser applications one can apply the same protection as for any other Android application.
+By modifying the Android API requests before they reach the browser application, one can manipulate the values, queried by JavaScript inside the browser sent to the system.
 
 We analyze the subtleties of sensor fingerprinting methods deployed across the spectrum of Android devices. 
 We recognize the significance of understanding the techniques leveraged to exploit the unique signatures inherent within sensor readings, to identify and track individual devices or users. 
@@ -306,7 +306,7 @@ By comprehensively examining the underlying mechanisms and implications of senso
 
 We recognize the importance of developing robust frameworks or mechanisms capable of obfuscating or randomizing sensor data, thereby circumventing attempts at device or user identification through fingerprinting techniques. 
 
-Our methodology will encompass an easy approach, by intercepting sensor values and modifying them before passing them over.
+Our methodology will encompass an approach, by intercepting sensor values and modifying them before passing them over.
 We will be also incorporating comprehensive literature review about Android fingerprinting, patch development and testing of our method.
 The analysis of the existing research helps us gain insight to develop our fingerprinting counter measure.
 
@@ -316,8 +316,8 @@ Ultimately, our goal within this thesis is not only to deepen the understanding 
 \chapter{Methodology}
 \label{chap:methodology}
 A number of solutions are already present in order to protect browsers against fingerprinting \cite{DBLP:conf/secrypt/PolcakSMHM23, DBLP:conf/dbsec/FaizKhademiZW15, DBLP:conf/www/NikiforakisJL15, DBLP:conf/esorics/TorresJM15}. 
-One fo them is to monitor and restrict access to properties commonly used for fingerprinting and prevent network traffic to tracking servers \cite{DBLP:conf/secrypt/PolcakSMHM23}. 
-Another method is to create fake profiles to counteract online tracking. 
+One of them is to monitor and restrict access to properties commonly used for fingerprinting and prevent network traffic to tracking servers \cite{DBLP:conf/secrypt/PolcakSMHM23}. 
+This includes creating fake profiles to counteract online tracking. 
 By altering fingerprinting data to mimic real world data, we can either hinder fingerprinting efforts or present a valid but fake profile to someone creating a fingerprint \cite{DBLP:conf/nbis/FioreCSP14}.
 Nevertheless, to the best of our knowledge, the number of available solutions for the protection of Android devices is limited.
 
@@ -326,26 +326,24 @@ Nevertheless, to the best of our knowledge, the number of available solutions fo
 The Android API has implemented a couple of proactive measures to counteract fingerprinting \cite{android_privacy_10}.
 This includes regulated control over access to identifying information and a robust permission system. 
 Android ensures that applications can only request and use the permissions that are explicitly granted to them \cite{android_privacy_11}.
-
-These measures are designed to make it challenging for apps and services to create unique fingerprints by limiting access to certain APIs and data points, but do not protect accessible characteristics.
+These measures are designed to make it challenging for apps and services to collect user-related and privacy sensitive data by limiting access to certain APIs and data points, but do not protect accessible characteristics.
 
 \section{Proposed Solutions}
 \label{sec:proposed}
 There are two proposed countermeasures designed to enhance the privacy of sensor data and protect against fingerprinting: calibration and noise generation \cite{DBLP:conf/ndss/DasBC16}. 
-Each of these methods addresses the issue of sensor data consistency in distinct ways, offering a comprehensive approach to mitigating the risk of device fingerprinting.
+Each of these methods addresses the issue of sensor data consistency in distinct ways, offering a comprehensive approach to mitigate the risk of device fingerprinting.
 
 \paragraph{Calibration.}
 \label{par:calibration}
-Calibration is the one of the countermeasures.
 It involves the systematic adjustment of sensor readings to account for and eliminate inherent biases and errors. 
-By carefully calibrating sensors, we can reduce the fixed discrepancies that arise from manufacturing variances and usage patterns, which are often exploited for fingerprinting. 
+By calibrating sensors, we can reduce the fixed discrepancies that arise from manufacturing variances and usage patterns, which are often exploited for fingerprinting. 
 This process ensures that the sensor outputs are more uniform and less distinctive across different devices. 
 Calibration works by applying specific corrections to the sensor data, aligning the readings more closely with standardized values. 
 This reduces the unique signatures that individual sensors might otherwise exhibit, making it more challenging to use these readings for identifying and tracking devices.
 
-\paragraph{Noise.}
+\paragraph{Noise Generation.}
 \label{par:noise}
-Noise Generation, the second countermeasure, directly targets the fingerprinting process by introducing variability into the sensor data. 
+This directly targets the fingerprinting process by introducing variability into the sensor data. 
 This method employs the deliberate addition of random noise to the sensor readings, effectively masking the original values. 
 The noise generation technique ensures that each sensor output is slightly altered every time it is read, preventing the formation of a consistent and stable fingerprint. 
 By applying this noise, the sensor data becomes less predictable and more resistant to fingerprinting efforts.
@@ -370,7 +368,6 @@ Noise generation introduces its own set of challenges.
 While it is highly effective at obfuscating sensor data and preventing the creation of consistent fingerprints, it can also degrade the functionality of applications that rely heavily on precise sensor readings. 
 For instance, applications that depend on exact measurements, such as fitness trackers, gaming apps with motion controls, navigation tools, and certain professional or scientific applications, may experience reduced accuracy and reliability. 
 The random noise added to sensor data can interfere with the app's ability to interpret user actions or environmental conditions correctly, leading to a compromised user experience. 
-Evidence supporting this assertion can be found in the paragraph \ref{par:usability}, which addresses the topic of usability.
 This degradation is particularly problematic in scenarios where precise sensor data is critical for safety or performance, such as in medical monitoring apps or systems that assist with physical rehabilitation.
 
 Moreover, the implementation of noise generation must be carefully balanced to ensure that the level of introduced noise is sufficient to disrupt fingerprinting attempts without excessively impairing the functionality of apps. 
@@ -400,7 +397,7 @@ This dynamic alteration of sensor data makes it more challenging to uniquely ide
 Our methodology utilizes the Android Application Patching Pipeline (A2P2)~\cite{DBLP:conf/IEEEares/Draschbacher23}, to modify APK files and intercept function calls to specific classes and functions within the Android operating system.
 The A2P2 framework allows for extensive modifications at the application level, enabling us to effectively intervene in the normal operation of various sensor-related functions.
 By leveraging this framework, we can inject custom code into the APKs, ensuring that any attempt to read sensor data is first filtered through our randomized value generation algorithm.
-This process involves an analysis of the application's structure to identify the precise points where sensor data is accessed.
+This process involves an analysis of the application's structure to identify the points where sensor data is accessed.
 Once these points are identified, the A2P2 framework facilitates the interception of these function calls, allowing us to alter the data being returned.
 This interception mechanism is crucial for implementing our countermeasure, as it provides the means to introduce noise or randomized values into the sensor data stream before the values are forwarded to the app.
 Consequently, this approach not only prevents the original, unaltered sensor data from being used to create persistent fingerprints but also maintains the overall functionality and user experience of the application.
@@ -438,7 +435,7 @@ This method effectively disrupts attempts, when any custom class derived from th
 \begin{figure}[h]
   \centering
   \captionsetup{justification=centering}
-  \fcolorbox{lightgray}{lightgray!10}{
+  % \fcolorbox{lightgray}{lightgray!10}{
     \begin{tikzpicture}
       \tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black]
 
@@ -452,7 +449,7 @@ This method effectively disrupts attempts, when any custom class derived from th
       \draw [thick, ->, >=stealth, black!50!green] (system.east)+(0,0.25) -| +(0.75,2);
       \draw [thick, ->, >=stealth, black!50!green] (patch.south)+(0.25,0) |- +(1,-1.75);
     \end{tikzpicture}
-  }
+  % }
   \caption{The function calls from the system are intercepted by our patch and forwarded after modification to the original function.}
   \label{fig:patch}
 \end{figure}
@@ -463,7 +460,7 @@ This method effectively disrupts attempts, when any custom class derived from th
   value_{new} = \frac{(value_{old} - offset_{sensor})}{gain_{sensor}}
   \label{eq:noise_gen}
 \end{equation}
-To create the noise, we employ a formula \ref{eq:noise_gen} adapted from a study by \citeauthor{DBLP:conf/ndss/DasBC16} \cite{DBLP:conf/ndss/DasBC16}.
+To create the noise, we employ a formula (\ref{eq:noise_gen}) adapted from a study by \citeauthor{DBLP:conf/ndss/DasBC16} \cite{DBLP:conf/ndss/DasBC16}.
 This approach leverages established principles of data obfuscation to effectively introduce variability into the sensor readings.
 The parameters for offset and gain are chosen within specific ranges determined by that study, ensuring that the introduced noise is effective in obfuscating the sensor data.
 
@@ -515,7 +512,7 @@ Together, they work seamlessly to introduce controlled randomness into the senso
 
 \paragraph{Intercept Method.}
 \label{par:intercept_method}
-This function, shown in \ref{lst:intercept_method}, serves as the central hub of the patch, responsible for applying noise to the sensor data when necessary.
+This function, shown in Appendix \ref{lst:intercept_method}, serves as the central hub of the patch, responsible for applying noise to the sensor data.
 The intercept method is designed to replace the calls made to sensor-related functions within the application. 
 When a sensor reading is requested, the intercept method activates, replacing the original function call that retrieves the sensor data.
 The intercept method then calls the noise generating function to alter the sensor data before passing it back to the original function. 
@@ -553,11 +550,11 @@ This APK serves as a robust testbed for validating the effectiveness of our patc
 By conducting tests on applications with high sensor data dependency, we can evaluate both the privacy enhancements introduced by our patch and its practical implications on everyday app usage.
 This evaluation ensures that our solution not only enhances user privacy but also preserves the essential functions of the applications tested.
 
-\chapter{Validation}
-\label{chap:validaton}
-The patch is validated through a process involving its application to an app, called \citetitle{SensorBox}~\cite{SensorBox}, designed to gather sensor measurements.
+\chapter{Evaluation}
+\label{chap:evaluation}
+The patch is validated through a process involving its application to an app, called \citetitle{SensorBox}~\cite{SensorBox}, which is designed to gather sensor measurements.
 During this period, the app collects a significant amount of sensor data, which is then split into two distinct sets: a training dataset and a test dataset.
-These recorded values are fed into a machine learning algorithm \cite{DBLP:conf/ndss/DasBC16}.
+These recorded values are fed into a machine learning algorithm \cite{DBLP:journals/tifs/AmeriniBCMN17}.
 To highlight the differences between the measurements we standardize the measured values used with the StandardScaler library.
 The training dataset is utilized to train a k-nearest neighbors (k-NN) or random forest classification algorithm, which are standard methods for assessing the variation of data points.
 By training the algorithms on the modified sensor data, we aim to evaluate how effectively the introduced noise disrupts the unique patterns of the sensor data and prevents accurate fingerprinting.
@@ -574,9 +571,8 @@ By selecting devices with different hardware configurations, we ensured a compre
 We recorded sensor values from the accelerometer and gyroscope over extended periods to assess the patch's influence.
 Additionally, we tested various applications to understand how the noise added to sensor data affected functionality and user experience.
 
-\paragraph{Effectivenes.}
+\paragraph{Effectiveness.}
 \label{par:effectiveness}
-The patch was applied to a data recording app \cite{SensorBox} to evaluate its functionality and effectiveness.
 To conduct this test, sensor values from the accelerometer and gyroscope were recorded over the duration of a minute.
 This experiment aimed to observe how the patch influenced the consistency of sensor data captured by the application.
 By analyzing the recorded data, we could determine the extent to which the patch successfully obfuscated the sensor values.

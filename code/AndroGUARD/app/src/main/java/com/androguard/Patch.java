@@ -14,6 +14,8 @@ import android.hardware.Sensor;
  * @since   03-08-2024
  */
 public class Patch {
+    private static final Random rnd = new Random();
+
     private static final int AXIS_X = 0;
     private static final int AXIS_Y = 1;
     private static final int AXIS_Z = 2;
@@ -41,7 +43,10 @@ public class Patch {
      * @return float random value between min and max.
      */
     private static float generateRandomValue(final float min, final float max) {
-        return ((new Random().nextFloat() * (max - min)) + min);
+        float median = (max / 2) + (min / 2);
+        float radius = (max / 2) - (min / 2);
+        int invert = rnd.nextBoolean() ? 1 : -1;
+        return median + invert * rnd.nextFloat() * radius;
     }
 
     /**
@@ -52,8 +57,8 @@ public class Patch {
      * @return float obscured sensor value.
      */
     private static float applyNoise(final float original, final float lambda_offset, final float lambda_gain) {
-        final float offset = generateRandomValue(0 - Math.abs(lambda_offset), 0 + Math.abs(lambda_offset));
-        final float gain = generateRandomValue(1 - Math.abs(lambda_gain), 1 + Math.abs(lambda_gain));
+        float offset = generateRandomValue(0 - Math.abs(lambda_offset), 0 + Math.abs(lambda_offset));
+        float gain = generateRandomValue(1 - Math.abs(lambda_gain), 1 + Math.abs(lambda_gain));
 
         return (original - offset) / gain;
     }
@@ -65,8 +70,8 @@ public class Patch {
      * @see SensorEvent
      */
     public static void manipulateValues(SensorEvent event) {
-        final float offset = lambda_offsets.getOrDefault(event.sensor.getType(), 0.0f);
-        final float gain = lambda_gains.getOrDefault(event.sensor.getType(), 0.0f);
+        float offset = lambda_offsets.getOrDefault(event.sensor.getType(), 0.0f);
+        float gain = lambda_gains.getOrDefault(event.sensor.getType(), 0.0f);
 
         switch (event.sensor.getType()) {
             case Sensor.TYPE_ACCELEROMETER:
