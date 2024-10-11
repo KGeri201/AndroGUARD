@@ -6,7 +6,6 @@ import argparse
 
 from utils import load_data
 
-# from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV, train_test_split
@@ -34,10 +33,6 @@ def classify(path: str,
 
     x_train, x_test, y_train, y_test = train_test_split(
         x, y, test_size=0.3, random_state=42)
-
-    # scaler = StandardScaler()
-    # x_train = scaler.fit_transform(x_train)
-    # x_test = scaler.transform(x_test)
 
     model = None
     param_grid = None
