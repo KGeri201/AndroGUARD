@@ -32,12 +32,6 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew assemblePatchPackages
 
-    - name: Get Current Release
-      id: get_current_release
-      uses: joutvhu/get-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4.4.3
       with:
