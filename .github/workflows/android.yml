@@ -38,8 +38,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Add artifact
-      uses: actions/upload-artifact@v3
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v4.4.3
       with:
-        name: Build
+        # name: Build
         path: code/AndroGUARD/app/build/outputs/patch/patch_static.zip
