@@ -1,10 +1,9 @@
 name: Android CI
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_dispatch:
+  release:
+    types: [created]
 
 defaults:
   run:
@@ -33,8 +32,18 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew assemblePatchPackages
 
-    - name: Archive built package
-      uses: actions/upload-artifact@v4
+    - name: Get Current Release
+      id: get_current_release
+      uses: joutvhu/get-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload assets
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: static-patch
-        path: code/AndroGUARD/app/build/outputs/patch/patch_static.zip
+        upload_url: ${{ steps.get_current_release.outputs.upload_url }}
+        asset_path: code/AndroGUARD/app/build/outputs/patch/patch_static.zip
+        asset_name: androguard_static.zip
+        asset_content_type: application/zip
