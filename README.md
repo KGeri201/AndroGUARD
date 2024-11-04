@@ -41,7 +41,7 @@ To maintain full functionality, also the unregisterListener methods of the Senso
   
 ## Apply patch to an app
 1. Download the latest [distribution](https://extgit.iaik.tugraz.at/fdraschbacher/a2p2/-/blob/main/a2p2_distribution_v1.0.1.zip?ref_type=heads) release from A2P2 and extract it.
-2. Download the latest [precompiled version](https://github.com/KGeri201/AndroGUARD/releases) of the patch.
+2. Download the latest [precompiled version](https://github.com/KGeri201/AndroGUARD/releases/latest) of the patch.
 3. Execute the command from the [A2P2 documentation](https://extgit.iaik.tugraz.at/fdraschbacher/a2p2/-/tree/main/distribution/docs?ref_type=heads)
     ```bash
     java -jar ./distribution/a2p2.jar <app>.apk ! unpack ! apply androguard_static.zip static ! pack ! sign ! ./
