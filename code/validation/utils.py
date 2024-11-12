@@ -49,6 +49,9 @@ def combine_features(path: str, output: str = None) -> np.ndarray:
         np.ndarray: numpy array of the combined CSVs without the header.
     """
 
+    if not os.path.exists(path):
+        return None
+
     features = None
     files = [path] if path.endswith('.csv') else [file for file in os.listdir(
         path) if file.endswith('.csv') and file in SENSORS]
@@ -63,15 +66,16 @@ def combine_features(path: str, output: str = None) -> np.ndarray:
         features = pd.merge_asof(
             features, tmp, on=TIME_COL, direction='forward') if features is not None else tmp
 
-    features = features.groupby(pd.Grouper(
-        key=TIME_COL, freq=FREQUENCY)).mean()
+    # features = features.groupby(pd.Grouper(
+    #     key=TIME_COL, freq=FREQUENCY)).mean()
+    features = features.drop(TIME_COL, axis=1)
     features = features.dropna()
     if output is not None:
         features.to_csv(output)
     return features.to_numpy()
 
 
-def load_data(path: str) -> tuple[np.ndarray, np.ndarray]:
+def load_data(path: str, target: str = None) -> tuple[np.ndarray, np.ndarray]:
     """
     Parses CSV files contained in any subfolder of the given directory.
 
@@ -92,7 +96,9 @@ def load_data(path: str) -> tuple[np.ndarray, np.ndarray]:
             'No valid folders were found at the given location.')
     for filename in files:
         tmp = combine_features(path if path.endswith('.csv') else os.path.join(
-            path, filename))
+            path, filename, target))
+        if tmp is None:
+            continue
         if tmp.shape[1] != NR_FEATURES:
             tmp = np.resize(tmp, (tmp.shape[0], NR_FEATURES))
         features = np.vstack((features, tmp)) if features is not None else tmp

@@ -4,6 +4,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorEvent;
 import android.hardware.Sensor;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 
 /**
@@ -11,10 +13,12 @@ import java.util.ArrayList;
  * Stores the original class for later access.
  * Calls the original functions of original class after manipulating the sensor values.
  * @author  Gergö Kranz
- * @version 1.0
- * @since   03-08-2024
+ * @version 1.1
+ * @since   10-11-2024
  */
 public class PatchListener implements SensorEventListener {
+    private static final Patch patch = new Patch();
+    
     private final SensorEventListener LISTENER;
     public ArrayList<Sensor> sensors = new ArrayList<>();
 
@@ -25,7 +29,7 @@ public class PatchListener implements SensorEventListener {
      * @see SensorEventListener
      * @see Sensor
      */
-    public PatchListener(SensorEventListener listener) {
+    public PatchListener(@NonNull SensorEventListener listener) {
         this.LISTENER = listener;
     }
 
@@ -34,6 +38,7 @@ public class PatchListener implements SensorEventListener {
      * @see SensorEventListener
      * @return original listener instance.
      */
+    @NonNull
     public final SensorEventListener getListener() {
         return LISTENER;
     }
@@ -47,7 +52,7 @@ public class PatchListener implements SensorEventListener {
      */
     @Override
     public void onSensorChanged(SensorEvent event) {
-        Patch.manipulateValues(event);
+        patch.manipulateValues(event);
         LISTENER.onSensorChanged(event);
     }
 

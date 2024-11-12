@@ -6,7 +6,6 @@ import argparse
 
 from utils import load_data
 
-# from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV, train_test_split
@@ -14,6 +13,7 @@ from sklearn.metrics import accuracy_score, classification_report
 
 
 def classify(path: str,
+             target: str,
              classifier: str = 'knn',
              gridsearch: bool = True
              ) -> KNeighborsClassifier | RandomForestClassifier:
@@ -30,14 +30,10 @@ def classify(path: str,
     Returns:
         Classifier: model trained on the dataset.
     """
-    x, y = load_data(path)
+    x, y = load_data(path, target)
 
     x_train, x_test, y_train, y_test = train_test_split(
         x, y, test_size=0.3, random_state=42)
-
-    # scaler = StandardScaler()
-    # x_train = scaler.fit_transform(x_train)
-    # x_test = scaler.transform(x_test)
 
     model = None
     param_grid = None
@@ -80,21 +76,35 @@ def classify(path: str,
     return best_model
 
 
+def setup_args(subparser: argparse.ArgumentParser) -> None:
+    """
+    Adds arguments to the program call.
+    """
+    subparser.add_argument('-i', '--input',
+                           dest='input',
+                           type=str,
+                           help='Input folder',
+                           required=True)
+
+    subparser.add_argument('-t', '--target',
+                           dest='target',
+                           type=str,
+                           help='Input subfolder',
+                           required=True)
+
+    subparser.add_argument('-c', '--classifier',
+                           dest='classifier',
+                           type=str,
+                           default='knn',
+                           choices=['knn', 'rf'],
+                           help='Input file or folder')
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('-i', '--input',
-                        dest='input',
-                        type=str,
-                        help='Input file or folder',
-                        required=True)
 
-    parser.add_argument('-c', '--classifier',
-                        dest='classifier',
-                        type=str,
-                        default='knn',
-                        choices=['knn', 'rf'],
-                        help='Input file or folder')
+    setup_args(parser)
 
     args = parser.parse_args()
 
-    classify(args.input, args.classifier)
+    classify(args.input, args.target, args.classifier)
