@@ -1,5 +1,6 @@
 package com.androguard;
 
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Map;
@@ -13,31 +14,31 @@ import androidx.annotation.NonNull;
  * Class containing the noise generation to be applied to values of the Android
  * Sensor class in order to obscure the builtin error
  * @author  Gergö Kranz
- * @version 2.0
- * @since   10-11-2024
+ * @version 2.1
+ * @since   17-11-2024
  */
 public class Patch {
-    private static final Random rnd = new Random();
+    static final Random rnd = new Random();
 
-    private static final int AXIS_X = 0;
-    private static final int AXIS_Y = 1;
-    private static final int AXIS_Z = 2;
+    static final int AXIS_X = 0;
+    static final int AXIS_Y = 1;
+    static final int AXIS_Z = 2;
 
     /**
      * List of 0 +/- offsets for the different sensors.
      */
-    private final Map<Integer, Float> lambda_offsets = Map.of(
-            Sensor.TYPE_ACCELEROMETER, 0.5f,
-            Sensor.TYPE_GYROSCOPE, 0.1f
-    );
+    final Map<Integer, Float> lambda_offsets = new HashMap<Integer, Float>() {{
+        put(Sensor.TYPE_ACCELEROMETER, 0.5f);
+        put(Sensor.TYPE_GYROSCOPE, 0.1f);
+    }};
 
     /**
      * List of 1 +/- gains for the different sensors.
      */
-    private final Map<Integer, Float> lambda_gains = Map.of(
-            Sensor.TYPE_ACCELEROMETER, 0.05f,
-            Sensor.TYPE_GYROSCOPE, 0.05f
-    );
+    final Map<Integer, Float> lambda_gains = new HashMap<Integer, Float>() {{
+        put(Sensor.TYPE_ACCELEROMETER, 0.5f);
+        put(Sensor.TYPE_GYROSCOPE, 0.5f);
+    }};
 
     /**
      * Gets a random value between the min and max range, inclusive the edges.
@@ -45,7 +46,7 @@ public class Patch {
      * @param max Upper bound of the range.
      * @return float random value between min and max.
      */
-    private float generateRandomValue(final float min, final float max) {
+    float generateRandomValue(final float min, final float max) {
         final float median = (max / 2) + (min / 2);
         final float radius = (max / 2) - (min / 2);
         final int invert = rnd.nextBoolean() ? 1 : -1;
@@ -60,7 +61,7 @@ public class Patch {
      * @param lambda_gain 1 +/- gain to be applied to the original value.
      * @return float obscured sensor value.
      */
-    private float applyNoise(final float original, final float lambda_offset, final float lambda_gain) {
+    float applyNoise(final float original, final float lambda_offset, final float lambda_gain) {
         final float offset = generateRandomValue(0 - Math.abs(lambda_offset), 0 + Math.abs(lambda_offset));
         final float gain = generateRandomValue(1 - Math.abs(lambda_gain), 1 + Math.abs(lambda_gain));
 
@@ -73,7 +74,7 @@ public class Patch {
      * @param type sensor type as key.
      * @return float +/- value offset.
      */
-    private float getOffset(final int type) {
+    float getOffset(final int type) {
         return Objects.requireNonNull(lambda_offsets.getOrDefault(type, 0.0f));
     }
 
@@ -83,7 +84,7 @@ public class Patch {
      * @param type sensor type as key.
      * @return float +/- value gain.
      */
-    private float getGain(final int type) {
+    float getGain(final int type) {
         return Objects.requireNonNull(lambda_gains.getOrDefault(type, 0.0f));
     }
 
@@ -91,9 +92,10 @@ public class Patch {
      * Selects offset and gain for the appropriate sensor and
      * applies noise to the value if the right sensor is read.
      * @param event SensorEvent.
+     * @return SensorEvent the modified event.
      * @see SensorEvent
      */
-    public void manipulateValues(@NonNull SensorEvent event) {
+    public SensorEvent manipulateValues(@NonNull SensorEvent event) {
         final float offset = getOffset(event.sensor.getType());
         final float gain = getGain(event.sensor.getType());
 
@@ -107,5 +109,7 @@ public class Patch {
             default:
                 break;
         }
+
+        return event;
     }
 }
