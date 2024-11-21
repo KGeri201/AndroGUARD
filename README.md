@@ -56,9 +56,6 @@ To maintain full functionality, also the unregisterListener methods of the Senso
 ## Validation
 The validation of the patch is done by splitting the gathered data, and training a classification algorithm with the training data and then checking its accuracy against the test set.
 
-## Credits
-[KGeri201](https://github.com/KGeri201)
-
 ## License
 [MIT License](LICENSE)
 
