@@ -115,7 +115,7 @@
 \thesistitle{AndroGUARD: Mitigation of\\Sensor Fingerprinting on Android}
 
 % Date of completion:
-\thesisdate{August 2024}
+\thesisdate{February 2024}
 
 % Supervisor:
 \supervisortitle{Supervisor} % or Supervisor
@@ -148,6 +148,7 @@ These errors are characteristic to each device and remain constant over its life
 We examine proposed mitigation techniques and implement our solution to mitigate fingerprinting, that can be used with a number of Android apps.
 Our approach adds random noise to the original sensor values, before they are passed down to the function handling them.
 With the help of the Android Application Patching Pipeline we can apply our patch to any compatible android app.
+We evaluate how varying noise levels affect the effectiveness of our obfuscation technique, finding that while increased noise enhances privacy by reducing fingerprintability, it also compromises the usefulness of sensor values.
 We conclude that by adding the random noise we mask the consistency of the built-in factory error to make sensor fingerprinting more complicated.
 
 \paragraph{Keywords:}
@@ -169,16 +170,16 @@ This method allows users to be tracked across multiple applications and services
 
 Advertisers frequently employ fingerprinting techniques to compile detailed user profiles for targeted advertising.
 However, malicious actors may exploit the same fingerprinting information for nefarious purposes, such as orchestrating tailored phishing attacks or deploying malware optimized for the user's specific device configuration.
-Moreover, the collection of detailed API fingerprinting data could reveal a substantial amount of sensitive information.
+Moreover, the collection of data from the API could reveal a substantial amount of sensitive information.
 When such data is aggregated, it may lead to a variety of fraudulent activities, leading to both security risks and privacy violations.
 
 Fingerprints can be based on various characteristics of the software and hardware configuration of the device, providing a way to distinguish it from other devices.
 Some of the used information is based on the system properties of the device, network or device configuration by the user \cite{DBLP:journals/popets/KurtzGBRF16}. 
 These properties can include details about the operating system, kernel version, and runtime parameters \cite{DBLP:journals/access/WuWWLY16}.
-Details about the Android build version, manufacturer, model, and build fingerprint are often included in the fingerprint. 
-Also the separate hardware components, like camera and speaker, can be uniquely fingerprinted \cite{DBLP:journals/tifs/Li10, DBLP:journals/popets/DasBC18}.
+Furthermore, details about the Android build version, manufacturer, model, and build fingerprint can be included in the fingerprint. 
+Additionally, the separate hardware components, like camera and speaker, can be uniquely fingerprinted \cite{DBLP:journals/tifs/Li10, DBLP:journals/popets/DasBC18}.
 
-In our work, we focus on reducing the fingerprintability of sensors.
+In this thesis, we focus on reducing the fingerprintability of sensors.
 Sensor fingerprinting refers to the process of identifying and tracking individual devices based on the unique characteristics and imperfections of their built-in sensors \cite{DBLP:conf/ndss/DeyRXCN14}. 
 These imperfections in sensors, exploited for fingerprinting, arise from manufacturing variations, material defects, calibration inaccuracies, and various environmental factors \cite{DBLP:journals/comsur/BaldiniS17, DBLP:journals/popets/DasBC18, DBLP:journals/tifs/ZhangBS21}. 
 Android devices, which are equipped with various sensors like accelerometers and gyroscopes are vulnerable to this type of fingerprinting \cite{DBLP:conf/ndss/DasBC16}. 
@@ -190,22 +191,24 @@ These studies demonstrate that the measurement errors inherent in these sensors 
 Furthermore, they show that these errors are consistent and stable over the lifetime of the sensor, making them reliable indicators for identifying and tracking individual devices. 
 This consistency in sensor errors highlights the potential privacy risks associated with sensor fingerprinting, as it allows for the persistent and unique identification of devices based solely on their hardware characteristics.
 While these papers highlighted the problem there is currently no mitigation implemented in Android.
+We will address this problem by implementing a possible solution masking sensor imperfections.
 
 Our implementation of AndroGUARD builds on suggestions from some of the research papers which covered this issue \cite{DBLP:conf/ndss/DasBC16, DBLP:journals/tifs/AmeriniBCMN17, DBLP:conf/ccs/0001ABP18}. 
-To implement and deploy our mitigation we use the Android Application Patching Pipeline, short A2P2, for easy deployment \cite{DBLP:conf/IEEEares/Draschbacher23}.
-By integrating the recommended strategies from the reviewed research papers into our patch, we aim to effectively obfuscate sensor data and prevent the extraction of identifiable information \cite{DBLP:conf/ndss/DasBC16}. 
+To implement and deploy our mitigation we use the Android Application Patching Pipeline (A2P2) \cite{DBLP:conf/IEEEares/Draschbacher23}.
+We aim to effectively obfuscate sensor data and prevent the extraction of identifiable information, by integrating the recommended strategy from a reviewed research paper \cite{DBLP:conf/ndss/DasBC16}. 
 By introducing random variations to sensor outputs, we can obscure unique error patterns, making it more challenging for adversaries to reliably fingerprint and track devices \cite{DBLP:journals/tifs/AmeriniBCMN17}. 
 Our approach not only addresses the vulnerabilities highlighted in the literature but also provides practical solutions to enhance the privacy and security of Android users.
 
 \paragraph{Outline.}
-In chapter \ref{chap:background}, we offer an introduction to fingerprinting techniques. 
-Moving forward to chapter \ref{chap:sensor_fingerprint}, we focus on sensor fingerprinting, where we detail its mechanics, common sensor types targeted, and real-world implications.
-Building on this information, in chapter \ref{chap:methodology} we examine existing countermeasures against fingerprinting, evaluating their effectiveness and limitations to provide context for our proposed solution. 
+In Chapter \ref{chap:background}, we offer a general fingerprinting techniques applicable to both browsers and smartphones. 
+Moving forward to Chapter \ref{chap:sensor_fingerprint}, we focus on sensor fingerprinting, where we detail its mechanics, common sensor types targeted, and real-world implications.
+Building on this information, in Chapter \ref{chap:methodology} we examine existing countermeasures against fingerprinting, evaluating their effectiveness and limitations to provide context for our proposed solution. 
 Chapter \ref{chap:approach} investigates the mitigation concepts presented in prior research, understanding relevant literature for our implementation of the selected mitigation strategy.
-Following this, chapter \ref{chap:implementation} provides a detailed breakdown of the patch creation process, including integration with the A2P2 framework and key functionalities such as the intercept method and noise generation. 
-We then outline the step-by-step process of applying the patch to APKs in chapter \ref{chap:applying}. 
+Following this, Chapter \ref{chap:implementation} provides a detailed breakdown of the patch creation process, including integration with the A2P2 framework and key functionalities such as the intercept method and noise generation. 
+We then outline the step-by-step process of applying the patch to APKs in Chapter \ref{chap:applying}. 
 Chapter \ref{chap:evaluation} shifts focus to validating the effectiveness of the patch, detailing the testing methodology, results, and areas for further improvement. 
-Finally, chapter \ref{chap:conclusion} summarizes our findings, reflects on the implications of the project, and outlines directions for future research and development.
+By highlighting the implications and discussing the limitations of our work, Chapter \ref{chap:disc_and_limits} offers directions for future research.
+Finally, Chapter \ref{chap:conclusion} summarizes our findings, reflects on the implications of the project, and outlines directions for future research and development.
 
 % You may want to keep your chapters in separate files ('chapterfilename.tex')
 % and include them here using either
@@ -213,30 +216,30 @@ Finally, chapter \ref{chap:conclusion} summarizes our findings, reflects on the 
 
 \chapter{Background}
 \label{chap:background}
-With the help of fingerprinting, companies or individuals with malicious intent can track users and their habits to create personalized profiles of them.
-However, tracking users based on the fingerprint of their devices can have various privacy and security concerns. 
-Some of this impact includes privacy concerns, security risks, data misuse and user experience implications \cite{DBLP:conf/ndss/MengZXZZBLTD23}.
+With the help of fingerprinting, users and their habits can be tracked to create personalized profiles of them.
+However, tracking users based on the fingerprint of their devices raises various privacy and security concerns \cite{DBLP:conf/ndss/MengZXZZBLTD23}.
 While advertisers may use fingerprints to build detailed profiles of users for targeted advertising, malicious actors on the other hand could exploit the information gathered for their targeted attacks. 
-For example, they may use the fingerprint data to tailor phishing attempts or deliver malware specific to the user's device configuration.
+For example, they may use the collected data to tailor phishing attempts or deliver malware specific to the user's device configuration.
 Detailed fingerprinting could potentially expose a variety of sensitive information that, when combined, may lead to identity theft or other fraudulent activities.
 Due to this, users might feel uncomfortable or even violated if they perceive that too much of their personal information is being used without their control.
 The practice of extensive fingerprinting may run against data protection regulations such as GDPR, which require explicit user consent for collecting and processing personal data.
+In the following, we will explore browser and mobile fingerprinting, focusing on their similarities and differences.
 
 \section{Browser Fingerprinting}
 \label{sec:browser_fingerprint}
 Browser fingerprinting is a widely known technique, which is frequently exploited to track users across different websites \cite{DBLP:conf/secrypt/PolcakSMHM23}.
 By using mainly JavaScript the visited website can access system information like screen resolution or settings set by the user.
-These attributes can be combined to create a unique identifier for the device.
+These attributes can be combined to create a unique identifier of the device.
 
 \paragraph{Browser fingerprinting methodologies.}
 \label{par:browser_fingerprint}
-There are multiple different methods applied by an adversary as described in a paper by \citeauthor{DBLP:conf/ntms/UpathilakeLM15} \cite{DBLP:conf/ntms/UpathilakeLM15}.
-An adversary can perform browser fingerprinting by analyzing various browser-specific attributes, such as the browser version, installed fonts, and other identifiable characteristics.
+Different methods can be applied to fingerprint a browser as shown by \citeauthor{DBLP:conf/ntms/UpathilakeLM15} \cite{DBLP:conf/ntms/UpathilakeLM15}.
+Browsers can be fingerprinted by analyzing various browser-specific attributes, such as the browser version, installed fonts, and other identifiable characteristics.
 Additionally, HTML5 functionalities, particularly the rendering of text and WebGL scenes via the canvas element, can be leveraged to generate a fingerprint.
-By rendering content and subsequently retrieving pixel data from the canvas, the adversary is able to construct a unique identifier based on subtle differences in how the browser displays these elements.
+By rendering content and subsequently retrieving pixel data from the canvas, a unique identifier based on subtle differences in how the browser displays these elements can be constructed.
 This technique allows for the creation of a detailed fingerprint that can be used to distinguish users across sessions.
-They can also use JavaScript to create cross-browser fingerprints, which are browser independent and focus more on the hardware the browser is running on, like screen resolution or networking information.
-With the use of JavaScript one can also access sensor data to create sensor fingerprints.
+JavaScript can also be used to create cross-browser fingerprints, which is browser independent and focuses more on the hardware the browser is running on, like screen resolution or networking information.
+With the use of JavaScript also sensor data can be accessed to create sensor fingerprints.
 
 \paragraph{Browser fingerprinting protections.}
 \label{par:browser_fingerprint_protect}
@@ -249,11 +252,10 @@ To solve this issue FP-Block \cite{DBLP:conf/esorics/TorresJM15} creates a diffe
 
 \section{Smartphone Fingerprinting}
 \label{sec:smartphone_fingerprint}
-Fingerprinting Android devices is similar to browser fingerprinting.
-Fingerprinting can uniquely identify users based on specific characteristics of their device and system configuration \cite{DBLP:conf/IEEEares/PalfingerP20}. 
-Different sensors and system information are accessed through the use of the Android API, in order to create a unique identifier.
+The concepts underlying browser fingerprinting can similarly be applied in the context of smartphone applications \cite{DBLP:conf/IEEEares/PalfingerP20}. 
+Different sensor and system information are accessed through the use of the mobile API, in order to create a unique identifier.
 
-A study bs \citeauthor{DBLP:conf/www/Gomez-BoixLB18}, about mobile browsers, highlights the differences the distinct behaviors in the absence of plugins like Flash \cite{DBLP:conf/www/Gomez-BoixLB18}.
+A study by \citeauthor{DBLP:conf/www/Gomez-BoixLB18}, about mobile browsers, highlights the differences the distinct behaviors in the absence of plugins like Flash \cite{DBLP:conf/www/Gomez-BoixLB18}.
 The analysis covers over 17,000 mobile fingerprints collected, finding that 81\% of these fingerprints are unique. 
 The dataset includes a multitude of operating systems, primarily Android devices.
 The user-agent attribute is the most distinctive, with over 3,000 unique values, due to detailed information about the device's operating system, version, and browser. 
@@ -279,6 +281,7 @@ Restricted access to sensitive identifiers is crucial to hinder fingerprinting a
 Android advocates for the responsible use of device information, by blocking access to unique identifiers, like IMEI numbers \cite{android_privacy_10, DBLP:conf/ndss/MengZXZZBLTD23}.
 Users have the freedom to review and modify app permissions through system settings, enabling them to manage access to personal information effectively. 
 When enforced with user education this permission model empowers the owner of the device to take informed decisions about the data they are willing to share with applications \cite{DBLP:conf/icta/NegashS15}.
+Despite the current permission system, there remains a significant possibility for fingerprinting through the use of sensor values.
 
 \chapter{Sensor Fingerprinting}
 \label{chap:sensor_fingerprint}
@@ -289,7 +292,7 @@ When exploited through fingerprinting techniques, such data can compromise user 
 
 It has been shown by multiple research papers that the built-in error of sensors remains consistent over the lifetime of the device \cite{DBLP:conf/sp/ZhangBS19, DBLP:conf/ndss/DeyRXCN14}. 
 This inherent characteristic of sensors, stemming from manufacturing imperfections and the initial calibration, results in a unique and persistent signature that does not change significantly over time. 
-Studies from \citeauthor{DBLP:journals/popets/DasBC18} have demonstrated that these discrepancies can be reliably measured and used to fingerprint individual devices, posing a significant threat to user privacy \cite{DBLP:journals/popets/DasBC18, DBLP:conf/ndss/DasBC16, DBLP:conf/ccs/DasBC14, DBLP:conf/ccs/0001ABP18}. 
+Studies from \citeauthor{DBLP:journals/popets/DasBC18} \cite{DBLP:journals/popets/DasBC18, DBLP:conf/ndss/DasBC16, DBLP:conf/ccs/DasBC14, DBLP:conf/ccs/0001ABP18} have demonstrated that these discrepancies can be reliably measured and used to fingerprint individual devices, posing a significant threat to user privacy. 
 This stability of sensor errors forms the basis for sensor fingerprinting techniques, highlighting the need for effective countermeasures to disrupt these patterns and protect against unauthorized tracking and identification.
 
 One way to create a fingerprint using built-in sensors is to play a tone from the device's speaker and record it with the microphone \cite{DBLP:conf/ccs/DasBC14, DBLP:journals/comsur/BaldiniS17}.
@@ -299,8 +302,8 @@ To enhance accuracy, multiple samples are recorded at various frequencies, and t
 One downside of this technique is that it relies on a relatively quiet environment and is easily influenced by the surroundings interfering with the acoustics.
 
 The accelerometer is ideal for fingerprinting because users often leave their devices still, such as on a desk, allowing for consistent data collection \cite{DBLP:conf/ndss/DeyRXCN14, DBLP:conf/sp/ZhangBS19, DBLP:journals/comsur/BaldiniS17}.
-Unlike audio-based fingerprinting, which needs a known signal, accelerometer fingerprinting relies on passive background measurements when the device is stationary.
-When the device is at rest, the acceleration vector equals the gravitational constant, making detection straightforward.
+Unlike audio-based fingerprinting, which needs a known signal, accelerometer fingerprinting relies on passive background measurements taken when the device is stationary.
+When the device is at rest, the acceleration vector should equal the gravitational constant, making detection of sensor imperfections straightforward
 To estimate the accelerometer's calibration parameters, measurements are taken with the device facing up and down, then the sensitivity and the offset of the sensor are calculated.
 This method is effective even if the surface is not perfectly level and can be done without user interaction, as devices are often left in both orientations.
 With more data and advanced processing, all six accelerometer parameters can be estimated, improving device identification accuracy.
@@ -326,33 +329,27 @@ For our patch to function, we analyze the subtleties of sensor fingerprinting me
 We recognize the significance of understanding the techniques leveraged to exploit the unique signatures inherent within sensor readings, to identify and track individual devices or users. 
 By comprehensively examining the underlying mechanisms and implications of sensor fingerprinting, we aim to implement a solution to reduce the risks in order to protect user privacy.
 
-We recognize the critical importance of developing advanced frameworks and mechanisms that are capable of effectively obfuscating or randomizing sensor data.
-Such solutions are essential in mitigating the risk of device or user identification through fingerprinting techniques, which exploit the unique characteristics of sensor data to create identifiable profiles.
-By introducing controlled randomness or masking techniques, these frameworks can disrupt the collection of consistent and traceable data points that would otherwise be used to uniquely identify and track users across sessions and platforms.
-
-Our methodology will encompass an approach, by intercepting sensor values and modifying them before passing them over.
-We will be also incorporating comprehensive literature review about Android fingerprinting, patch development and testing of our method.
-The analysis of the existing research helps us gain insight to develop our fingerprinting counter measure.
-
-Ultimately, our goal within this thesis is not only to deepen the understanding of sensor fingerprinting within the Android ecosystem but also to offer tangible solutions that empower users to maintain control over their personal data. 
-
+This work emphasizes the need for advanced frameworks to obfuscate or randomize sensor data, mitigating the risk of user identification through sensor fingerprinting techniques.
+By introducing controlled randomness or masking, our approach disrupt the collection of consistent data that could be used for tracking users.
+Our methodology involves intercepting and modifying sensor values, supported by a comprehensive literature review on Android fingerprinting, patch development, and testing, with the ultimate goal of providing a possible solution that enhance user control over their personal data.
 
 \chapter{Methodology}
 \label{chap:methodology}
+We investigate sensor fingerprinting and develop a countermeasure, detailing the approach, tools, and processes used in our study.
 A number of solutions are already present in order to protect browsers against fingerprinting \cite{DBLP:conf/secrypt/PolcakSMHM23, DBLP:conf/dbsec/FaizKhademiZW15, DBLP:conf/www/NikiforakisJL15, DBLP:conf/esorics/TorresJM15}. 
 One of them is to monitor and restrict access to properties commonly used for fingerprinting and prevent network traffic to tracking servers \cite{DBLP:conf/secrypt/PolcakSMHM23}. 
 This includes creating fake profiles to counteract online tracking. 
 By altering fingerprinting data to mimic real world data, we can either hinder fingerprinting efforts or present a valid but fake profile to someone creating a fingerprint \cite{DBLP:conf/nbis/FioreCSP14}.
 Nevertheless, to the best of our knowledge, the number of available solutions for the protection of Android devices is limited.
 
-\section{Privacy Protections on Android}
-\label{par:privacy-protections}
 The Android API has implemented a couple of proactive measures to counteract fingerprinting \cite{android_privacy_10}.
 This includes regulated control over access to identifying information and a robust permission system. 
 Android ensures that applications can only request and use the permissions that are explicitly granted to them \cite{android_privacy_11}.
 These measures aim to make it difficult for apps and services to collect user-related and privacy-sensitive data by restricting access to certain APIs and data points.
 However, they do not safeguard characteristics that remain accessible, such as sensor values \cite{DBLP:journals/access/WuWWLY16}.
 As a result, while some data points are protected, others can still be exploited for purposes like device fingerprinting, leaving privacy vulnerabilities.
+
+In the following we examine the proposed solutions, evaluate their limitations, and select the most appropriate option for our use case.
 
 \section{Proposed Solutions}
 \label{sec:proposed}
@@ -580,14 +577,19 @@ This evaluation ensures that our solution not only enhances user privacy but als
 
 \chapter{Evaluation}
 \label{chap:evaluation}
-The functionality of the patch is validated through a process involving its application to an app, called \citetitle{SensorBox}~\cite{SensorBox}, which is designed to gather sensor measurements.
-In order to to test not only the functionality but also the effectiveness of the patch we created a simple data gathering app~\cite{sensorprint} to collect unaltered and altered data at the same time. 
+The following sections assess our methodology in terms of functionality, effectiveness, and usability. 
+First, the functionality of the patch is validated through a process involving its application to an app, called \citetitle{SensorBox}~\cite{SensorBox}, which is designed to gather sensor measurements.
+In order to test not only the functionality but also the effectiveness of the patch we created a simple data gathering app~\cite{sensorprint} to collect unaltered and altered data at the same time. 
 During the evaluation period, the app collects a significant amount of sensor data, which is then split into two distinct sets: a training dataset and a test dataset.
 These recorded values are fed into a machine learning algorithm \cite{DBLP:journals/tifs/AmeriniBCMN17}.
 The training dataset is utilized to train a k-nearest neighbors (k-NN) or random forest classification algorithm, which are standard methods for assessing the variation of data points.
 By training the algorithms on the modified sensor data, we aim to evaluate how effectively the introduced noise disrupts the unique patterns of the sensor data and prevents accurate fingerprinting.
 We apply gridsearch to determine the best possible parameters for the highest accuracy.
-The test dataset is subsequently used to validate the trained algorithm, allowing us to measure the classification accuracy and determine whether the patch has successfully mitigated fingerprintability.
+The test dataset is subsequently used to validate the trained algorithm, allowing us to measure the classification accuracy and determine whether the patch has successfully reduced fingerprintability.
+The recorded precision quantifies the proportion of correctly predicted positive instances relative to the total number of positive predictions made by the model.
+A higher precision value indicates a lower rate of false positives, reflecting better prediction accuracy for positive classifications.
+The resulted recall value evaluates the model's ability to identify all relevant instances, with higher values indicating fewer false negatives.
+The f1-score provides a harmonic mean of precision and recall, offering a balanced metric that accounts for both false positives and false negatives.
 This validation process provides crucial insights into the effectiveness of the patch in enhancing sensor data privacy while maintaining a balance with the functionality of the app.
 Through this evaluation, we can ensure that the patch introduces the necessary privacy protections.
 
@@ -599,8 +601,8 @@ By selecting devices with different hardware configurations we ensured a compreh
 We recorded sensor values from the accelerometer and gyroscope over extended periods to assess the patch's influence.
 Additionally, we tested various applications to understand how the noise added to sensor data affected functionality and user experience.
 
-\paragraph{Functionality.}
-\label{par:functionality}
+\subsection{Functionality}
+\label{subsec:functionality}
 To evaluate the applicability of the patch to existing applications, we selected the simple app \citetitle{SensorBox} as a test case.
 The purpose of this test was to determine whether \citetitle{SensorBox} could successfully receive and process the modified sensor values generated by the applied update.
 Upon implementing the patch, we observed that \citetitle{SensorBox} seamlessly integrated the patched values without encountering any errors or operational issues.
@@ -624,19 +626,35 @@ This successful application demonstrates the patch's compatibility with establis
   \label{fig:values}
 \end{figure}
 
-\paragraph{Effectiveness.}
-\label{par:effectiveness}
+\subsection{Effectiveness}
+\label{subsec:effectiveness}
 To conduct this test, sensor values from the accelerometer and gyroscope were recorded over the duration of a minute.
 This experiment aimed to observe how the patch influenced the consistency of sensor data captured by the application.
 By analyzing the recorded data, we could determine the extent to which the patch successfully obfuscated the sensor values.
-
-By comparing the consistency of the sensor readouts before and after applying the patch, a significant change can be observed, as shown in Figure \ref{fig:values}, mirroring the findings of previous research studies. 
+Comparing the consistency of the sensor readouts before and after applying the patch, a significant change can be observed in Figure \ref{fig:values}, mirroring the findings of previous research studies. 
 Before the application of our patch, the sensor values exhibit a high degree of consistency, which can be exploited for fingerprinting.
 However, after the patch introduces randomization and noise, the sensor readouts become visibly less consistent.
+
+The test results are presented and interpreted through various performance metrics, providing a comprehensive evaluation of our model's effectiveness and reliability.
+Precision refers to the proportion of instances that were correctly classified as positive out of all instances that the model predicted as positive.
+It measures how often the model's positive predictions are actually correct.
+Recall, also known as sensitivity, focuses on the proportion of actual positive instances that were correctly identified by the model, emphasizing the system's ability to detect relevant instances.
+F1-score serves as a balance between precision and recall, providing a single measure that accounts for both false positives and false negatives.
+Lastly, support represents the number of actual instances of each class in the dataset, offering insight into how well the model performs across classes with different frequencies.
 To determine if the obfuscation method works we evaluate the accuracy of the machine learning algorithm to determine its precision and recall.
 The accuracy is calculated by dividing the number of correct predictions with the number of all predictions.
-When the classification algorithm used the unpatched, unmasked data it was able to associate all of the devices with their measurement.
-After applying the patch and retraining the algorithm it was only able to match the devices with 69.583\% accuracy, even with our few samples of ten devices \ref{tab:knn_results}. 
+
+When the classification algorithm used the unpatched, unmasked data it was able to associate all of the devices with their measurement with 100\% confidence.
+After applying the patch and retraining the algorithm it was only able to match the devices with 72.916\% accuracy, even with our few samples of ten devices as shown in Figure \ref{tab:knn_results}. 
+When analyzing the classification results for each individual device, it becomes clear that the performance metrics all declined from their previous values of 100\% as shown in Figure \ref{tab:knn_detailed_results}.
+This reduction highlights a shift in the effectiveness of our fingerprinting method when applied to devices after being patched, making it more difficult to maintain a consistent fingerprint across different devices.
+
+The observed drop in these metrics indicates that the classifier's ability to distinguish device-specific patterns has been compromised.
+This is due to the introduced variability by our patch in sensor data across devices.
+Our results demonstrate a low incidence of false positives, indicating a high degree of confidence in the classification of the observed instances.
+Notably, this level of accuracy was maintained even when distinguishing between devices of the same make and model, underscoring the robustness and reliability of this simple fingerprinting approach.
+These findings suggest that the model is capable of effectively identifying subtle differences between devices, even when hardware and software configurations are largely identical.
+
 We believe that this accuracy would decrease even more with the use of a lot more devices, increasing the disruption of consistent error values.
 This disruption in the data stability effectively hinders the ability to create a reliable fingerprint, aligning with the results documented in other papers.
 This observed change underscores the effectiveness of the patch in enhancing privacy by preventing the formation of stable and persistent sensor-based identifiers.
@@ -645,7 +663,7 @@ This observed change underscores the effectiveness of the patch in enhancing pri
   \centering
   \captionsetup{justification=centering}
   \subfloat{
-    \begin{tabularx}{.175\textwidth}{l|}        
+    \begin{tabularx}{.175\textwidth}{r|}        
       \\ \hline
       accuracy      \\
       macro avg     \\
@@ -654,7 +672,7 @@ This observed change underscores the effectiveness of the patch in enhancing pri
   }
   \quad
   \subfloat[Results before obfuscation]{
-    \begin{tabularx}{.335\textwidth}{|lll|}
+    \begin{tabularx}{.335\textwidth}{|ccc|}
       precision & recall & f1-score \\ \hline
                 &        & 1.00     \\
       1.00      & 1.00   & 1.00     \\
@@ -663,28 +681,180 @@ This observed change underscores the effectiveness of the patch in enhancing pri
   }
   \quad
   \subfloat[Results after obfuscation]{
-    \begin{tabularx}{.335\textwidth}{|lll|}
+    \begin{tabularx}{.335\textwidth}{|ccc|}
       precision & recall & f1-score \\ \hline
-                &        & 0.70     \\
-      0.70      & 0.69   & 0.69     \\
-      0.70      & 0.70   & 0.70     \\
+                &        & 0.73     \\
+      0.73      & 0.73   & 0.73     \\
+      0.73      & 0.73   & 0.73     \\
     \end{tabularx}
   }
-  \caption{knn classifier results}
+  \caption{The performance outcomes of the KNN classifier over the test dataset.}
   \label{tab:knn_results}
 \end{table}
 
-\paragraph{Usability.}
-\label{par:usability}
+\begin{table}[h]
+  \centering
+  \captionsetup{justification=centering}
+  \begin{tabular}{r|cccc|}
+                        & precision & recall  & f1-score  & support \\ \hline
+    Galaxy A34 5G \_01  & 0.82      & 0.66    & 0.73      & 74      \\
+    Galaxy A54 5G \_01  & 0.59      & 0.60    & 0.59      & 82      \\
+    Galaxy A55 5G \_01  & 0.95      & 0.96    & 0.95      & 76      \\
+    Galaxy M23 5G \_01  & 0.44      & 0.37    & 0.40      & 68      \\
+    Galaxy M23 5G \_02  & 0.61      & 0.65    & 0.63      & 66      \\
+    Galaxy S21 5G \_01  & 0.59      & 0.58    & 0.58      & 76      \\
+       Galaxy S23 \_02  & 0.77      & 0.94    & 0.85      & 62      \\
+  Galaxy Tab S10+ \_01  & 0.72      & 0.76    & 0.74      & 72      \\
+ Galaxy Tab S9 5G \_01  & 0.77      & 0.80    & 0.78      & 75      \\
+        Nokia 6.1 \_01  & 1.00      & 1.00    & 1.00      & 69      \\
+  \end{tabular}
+  \caption{Detailed results of the KNN classifier for each individual device.}
+  \label{tab:knn_detailed_results}
+\end{table}
+
+\subsection{Usability}
+\label{subsec:usability}
 The patch was applied to a motion-controlled game \cite{krassesSpiel} to assess its impact on user experience.
 This specific test was designed to determine how the introduction of noise to sensor readouts would affect applications that rely heavily on precise sensor data.
 When the app was running with the patch installed, the added noise in the sensor readouts caused noticeable shaking of the controlled object.
 This unintended side effect made the game more challenging to play, as the smooth and accurate movement necessary for controlling the game object was compromised.
 The increased difficulty highlighted the potential trade-offs between enhancing privacy and maintaining the usability of certain types of applications, particularly those that depend on fine-tuned sensor accuracy for optimal performance.
 
-\paragraph{}
-During our limited testing, we were unable to test our implementation on a sufficient number of devices to definitively state whether the patch works as intended across a broad spectrum of hardware configurations.
+\section{Noise Level Adjustment}
+\label{sec:noise_level_adjustment}
+Modifying the level of noise applied to sensor data enhances resistance against device fingerprinting, though it presents trade-offs that impact application functionality.
+By increasing the noise intensity, it becomes more difficult for fingerprinting algorithms to reliably distinguish unique device signatures as shown in Figure \ref{tab:knn_increased_results}, thereby strengthening user privacy.
+In our testing, increasing the gain of the sensor values resulted in a more pronounced decrease in the effectiveness of fingerprinting methods.
+This adjustment disrupted the distinctiveness of sensor data, thereby enhancing privacy by making it more challenging for algorithms to identify unique device signatures.
+In contrast, modifying the offset applied to the sensor readouts had a relatively limited impact on the fingerprinting process.
+The offset adjustment did not significantly alter the underlying characteristics of the sensor data, thus allowing more identifiable patterns to remain detectable. 
+However, excessive noise disrupts the accuracy and reliability of sensor data, which many applications rely upon for core functions, rendering them less usable or even impractical.
+Conversely, reducing the noise level to preserve application functionality also diminishes the effectiveness of fingerprinting protection as demonstrated in Figure \ref{tab:knn_decreased_results}.
+Achieving an optimal balance between these competing priorities, privacy enhancement through obfuscation and the maintenance of application performance remains important.
 
+\begin{table}[h]
+  \centering
+  \captionsetup{justification=centering}
+  \subfloat{
+    \begin{tabularx}{.175\textwidth}{r|}        
+      \\ \hline
+      accuracy      \\
+      macro avg     \\
+      weighted avg  \\
+    \end{tabularx}
+  }
+  \quad
+  \subfloat[Results with high gain]{
+    \begin{tabularx}{.335\textwidth}{|ccc|}
+      precision & recall & f1-score \\ \hline
+                &        & 0.51     \\
+      0.52      & 0.52   & 0.52     \\
+      0.52      & 0.51   & 0.51     \\
+    \end{tabularx}
+  }
+  \quad
+  \subfloat[Results with high gain and offset]{
+    \begin{tabularx}{.335\textwidth}{|ccc|}
+      precision & recall & f1-score \\ \hline
+                &        & 0.41     \\
+      0.41      & 0.41   & 0.41     \\
+      0.41      & 0.41   & 0.41     \\
+    \end{tabularx}
+  }
+  \linebreak
+  \subfloat{
+    \begin{tabularx}{.175\textwidth}{r|}        
+      \\ \hline
+      accuracy      \\
+      macro avg     \\
+      weighted avg  \\
+    \end{tabularx}
+  }
+  \quad
+  \subfloat[Results with default offset and gain]{
+    \begin{tabularx}{.335\textwidth}{|ccc|}
+      precision & recall & f1-score \\ \hline
+                &        & 0.73     \\
+      0.73      & 0.73   & 0.73     \\
+      0.73      & 0.73   & 0.73     \\
+    \end{tabularx}
+  }
+  \quad
+  \subfloat[Results with high offset]{
+    \begin{tabularx}{.335\textwidth}{|ccc|}
+      precision & recall & f1-score \\ \hline
+                &        & 0.54     \\
+      0.55      & 0.55   & 0.55     \\
+      0.55      & 0.54   & 0.54     \\
+    \end{tabularx}
+  }
+  \caption{knn classifier results after patch with increased noise level}
+  \label{tab:knn_increased_results}
+\end{table}
+
+\begin{table}[h]
+  \centering
+  \captionsetup{justification=centering}
+  \subfloat{
+    \begin{tabularx}{.175\textwidth}{r|}        
+      \\ \hline
+      accuracy      \\
+      macro avg     \\
+      weighted avg  \\
+    \end{tabularx}
+  }
+  \quad
+  \subfloat[Results with low gain]{
+    \begin{tabularx}{.335\textwidth}{|ccc|}
+      precision & recall & f1-score \\ \hline
+                &        & 0.78     \\
+      0.79      & 0.78   & 0.78     \\
+      0.78      & 0.78   & 0.78     \\
+    \end{tabularx}
+  }
+  \quad
+  \subfloat[Results with default gain and offset]{
+    \begin{tabularx}{.335\textwidth}{|ccc|}
+      precision & recall & f1-score \\ \hline
+                &        & 0.73     \\
+      0.73      & 0.73   & 0.73     \\
+      0.73      & 0.73   & 0.73     \\
+    \end{tabularx}
+  }
+  \linebreak
+  \subfloat{
+    \begin{tabularx}{.175\textwidth}{r|}        
+      \\ \hline
+      accuracy      \\
+      macro avg     \\
+      weighted avg  \\
+    \end{tabularx}
+  }
+  \quad
+  \subfloat[Results with low offset and gain]{
+    \begin{tabularx}{.335\textwidth}{|ccc|}
+      precision & recall & f1-score \\ \hline
+                &        & 0.91     \\
+      0.91      & 0.91   & 0.91     \\
+      0.91      & 0.91   & 0.91     \\
+    \end{tabularx}
+  }
+  \quad
+  \subfloat[Results with low offset]{
+    \begin{tabularx}{.335\textwidth}{|ccc|}
+      precision & recall & f1-score \\ \hline
+                &        & 0.81     \\
+      0.81      & 0.81   & 0.81     \\
+      0.81      & 0.81   & 0.81     \\
+    \end{tabularx}
+  }
+  \caption{knn classifier results after patch with decreased noise level}
+  \label{tab:knn_decreased_results}
+\end{table}
+
+\chapter{Discussion \& Limitations}
+\label{chap:disc_and_limits}
+During our limited testing, we were unable to test our implementation on a sufficient number of devices to definitively state whether the patch works as intended across a broad spectrum of hardware configurations.
 While the initial results were promising, indicating that the patch could successfully obfuscate sensor data and disrupt fingerprinting attempts, the limited sample size means that these results cannot be generalized to all devices.
 Unfortunately, our access to a diverse range of devices was limited.
 This scarcity of devices hindered our ability to perform extensive and comprehensive testing.
@@ -704,86 +874,16 @@ Despite the limited scope of our testing, we are still convinced of the results 
 These studies provide a solid foundation for our approach, demonstrating that introducing variability into sensor data can effectively prevent the creation of consistent and identifiable fingerprints.
 We are confident in the robustness of our patch design and the alignment of our methods with those proven effective in existing research.
 
-\paragraph{Limitations}
-\label{par:limitations}
 While the obfuscated sensor data generated by our patch enhances privacy by disrupting fingerprinting attempts, it does impact the accuracy of sensor readings. 
 To address the needs of applications that rely on precise sensor data, a custom permission system could be used, allowing specific apps to access direct sensor data under controlled and user-approved conditions. 
 This approach balances the importance of both privacy protection and functional accuracy, ensuring that users retain control over their data while enabling high-precision applications to operate effectively.
 
-\section{Noise Level Adjustment}
-\label{sec:noise_level_adjustment}
-Modifying the level of noise applied to sensor data enhances resistance against device fingerprinting, though it presents trade-offs that impact application functionality.
-By increasing the noise intensity, it becomes more difficult for fingerprinting algorithms to reliably distinguish unique device signatures, thereby strengthening user privacy.
-In our testing, increasing the gain of the sensor values resulted in a more pronounced decrease in the effectiveness of fingerprinting methods.
-This adjustment disrupted the distinctiveness of sensor data, thereby enhancing privacy by making it more challenging for algorithms to identify unique device signatures.
-In contrast, modifying the offset applied to the sensor readouts had a relatively limited impact on the fingerprinting process.
-The offset adjustment did not significantly alter the underlying characteristics of the sensor data, thus allowing more identifiable patterns to remain detectable. 
-However, excessive noise disrupts the accuracy and reliability of sensor data, which many applications rely upon for core functions, rendering them less usable or even impractical.
-Conversely, reducing the noise level to preserve application functionality also diminishes the effectiveness of fingerprinting protection.
-Achieving an optimal balance between these competing priorities—privacy enhancement through obfuscation and the maintenance of application performance remains important.
-
-\begin{table}[h]
-  \centering
-  \captionsetup{justification=centering}
-  \subfloat{
-    \begin{tabularx}{.175\textwidth}{l|}        
-      \\ \hline
-      accuracy      \\
-      macro avg     \\
-      weighted avg  \\
-    \end{tabularx}
-  }
-  \quad
-  \subfloat[Results with high gain]{
-    \begin{tabularx}{.335\textwidth}{|lll|}
-      precision & recall & f1-score \\ \hline
-                &        & 0.84     \\
-      0.83      & 0.83   & 0.83     \\
-      0.83      & 0.84   & 0.83     \\
-    \end{tabularx}
-  }
-  \quad
-  \subfloat[Results with high gain and offset]{
-    \begin{tabularx}{.335\textwidth}{|lll|}
-      precision & recall & f1-score \\ \hline
-                &        & 0.81     \\
-      0.81      & 0.82   & 0.81     \\
-      0.82      & 0.81   & 0.81     \\
-    \end{tabularx}
-  }
-  \linebreak
-  \subfloat{
-    \begin{tabularx}{.175\textwidth}{l|}        
-      \\ \hline
-      accuracy      \\
-      macro avg     \\
-      weighted avg  \\
-    \end{tabularx}
-  }
-  \quad
-  \subfloat[Results with default offset and gain]{
-    \begin{tabularx}{.335\textwidth}{|lll|}
-      precision & recall & f1-score \\ \hline
-                &        & 0.96     \\
-      0.96      & 0.96   & 0.96     \\
-      0.96      & 0.96   & 0.96     \\
-    \end{tabularx}
-  }
-  \quad
-  \subfloat[Results with high offset]{
-    \begin{tabularx}{.335\textwidth}{|lll|}
-      precision & recall & f1-score \\ \hline
-                &        & 0.92     \\
-      0.92      & 0.92   & 0.92     \\
-      0.92      & 0.92   & 0.92     \\
-    \end{tabularx}
-  }
-  \caption{knn classifier results after patch with increased noise level\\on a subset of testdevices}
-  \label{tab:knn_increased_results}
-\end{table}
 
 \chapter{Conclusion}
 \label{chap:conclusion}
+Fingerprinting devices based on sensor value imperfections poses a significant privacy concern, as these subtle errors, often caused by manufacturing variances or environmental factors, can be exploited to uniquely identify and track devices.
+Unlike traditional identifiers, sensor-based fingerprints do not require explicit user permissions, making them a covert and persistent threat to user anonymity. 
+
 Our approach addresses the problem of consistent sensor error values which can be used for fingerprinting.
 We intercept sensor readouts with the help of the A2P2 framework and manipulate them with added noise.
 After limited testing, which showed promising tendencies, we conclude that it is feasible to protect against fingerprinting based on the unique built-in errors of sensors by masking these errors with randomly generated noise.
@@ -792,22 +892,19 @@ Our approach demonstrates that by introducing controlled variability into sensor
 By introducing artificial noise, the distinctive patterns and unique characteristics that these sensors typically exhibit become harder to identify, which complicates efforts to track or profile devices.
 This method not only enhances privacy but also maintains the integrity of sensor data for general use, ensuring that the overall functionality of the device is not heavily compromised.
 
-Increasing the level of noise in sensor data can serve as a method to enhance value obfuscation, thereby reducing the efficiency of sensor fingerprinting techniques.
+Increasing the level of noise in sensor data can serve as a method to enhance obfuscation, thereby reducing the efficiency of sensor fingerprinting techniques.
 However, this approach comes with a significant trade-off.
 While the added noise effectively disrupts fingerprinting efforts, it simultaneously degrades the accuracy and reliability of the sensor data.
 This degradation can lead to a notable decrease in the overall functionality and performance of applications that rely on precise sensor inputs.
-Excessive noise can impair many mobile and IoT applications depending on real-time, accurate sensor data for activities such as navigation, environmental monitoring, or gesture recognition, reducing user experience and the app's practical utility.
+Excessive noise can impair many applications depending on accurate sensor data for activities such as navigation, environmental monitoring, or gesture recognition, reducing user experience and the app's practical utility.
 Thus, while noise augmentation can provide privacy benefits, it must be carefully balanced against the need to maintain the operational effectiveness of applications.
 
 Furthermore, implementing an additional permission for apps to access unobfuscated sensor data, could provide the user to grant explicit consent, ensuring that user experience is not compromised for applications requiring precise sensor measurements.
 This permission mechanism could allow users to balance their privacy needs with the functional demands of specific apps, granting them control over which applications can bypass the noise generation.
 
-By offering this user-controlled flexibility, we ensure that critical applications can operate without degradation in performance while still protecting against potential privacy breaches.
+By offering this user-controlled flexibility, we could ensure that critical applications can operate without degradation in performance while still protecting against potential privacy breaches.
 This combined strategy of noise generation and user-controlled permissions provides a comprehensive and balanced solution, enhancing privacy without sacrificing the functionality and accuracy required by essential applications. 
 Through this approach, we can significantly increase the difficulty for adversaries attempting to create a consistent fingerprint of devices based on the sensors used. 
-
-By introducing controlled noise into sensor data, we effectively disrupt the stable and unique patterns that adversaries rely on to identify and track devices. 
-This noise generation method ensures that the sensor readings vary enough to prevent the formation of a reliable fingerprint, thereby enhancing the privacy and security of the device.
 
 %--- INDEX and BIBLIOGRAPHY ----------------------------------------------------
 
@@ -900,7 +997,7 @@ public static void unregisterListener(SensorManager sm, SensorEventListener list
 * @param event SensorEvent.
 * @see SensorEvent
 */
-private static void manipulateValues(SensorEvent event) {
+private void manipulateValues(SensorEvent event) {
   float offset = Utils.getOffset(event.sensor.getType());
   float gain = Utils.getGain(event.sensor.getType());
 
@@ -925,7 +1022,7 @@ private static void manipulateValues(SensorEvent event) {
 * @param lambda_gain 1 +/- gain to be applied to the original value.
 * @return float obscured sensor value.
 */
-private static float applyNoise(final float original, final float lambda_offset, final float lambda_gain) {
+private float applyNoise(final float original, final float lambda_offset, final float lambda_gain) {
   float offset = generateRandomValue(0 - Math.abs(lambda_offset), 
                                            0 + Math.abs(lambda_offset));
   float gain = generateRandomValue(1 - Math.abs(lambda_gain), 
