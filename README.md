@@ -20,7 +20,7 @@ Patching apps with the created mechanism, using the [A2P2 Framework](https://ext
 
   - Started on 20.03.2024 
 
-  - Presentation on 28.02.2024 
+  - Presentation on 20.02.2024 
 
   - Completed on ...
 
