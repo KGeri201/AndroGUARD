@@ -452,21 +452,19 @@ This method effectively disrupts attempts, when any custom class derived from th
 \begin{figure}[h]
   \centering
   \captionsetup{justification=centering}
-  % \fcolorbox{lightgray}{lightgray!10}{
-    \begin{tikzpicture}
-      \tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black]
+  \begin{tikzpicture}
+    \tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black]
 
-      \node (sensor) [process] at (0,0) {Sensor value changes};
-      \node (system) [process] at (5,0) {System};
-      \node (patch) [process, black!50!green] at (7.5,2.5) {Patch};
-      \node (function) [process] at (10,0) {Original};
+    \node (sensor) [process] at (0,0) {Sensor value changes};
+    \node (system) [process] at (5,0) {System};
+    \node (patch) [process, black!50!green] at (7.5,2.5) {Patch};
+    \node (function) [process] at (10,0) {Original};
 
-      \draw [thick, ->, >=stealth] (sensor) -- (system);
-      \draw [thick, ->, >=stealth, red, dashed] (system.east)+(0,-0.25) -- +(2,-0.25);
-      \draw [thick, ->, >=stealth, black!50!green] (system.east)+(0,0.25) -| +(0.75,2);
-      \draw [thick, ->, >=stealth, black!50!green] (patch.south)+(0.25,0) |- +(1,-1.75);
-    \end{tikzpicture}
-  % }
+    \draw [thick, ->, >=stealth] (sensor) -- (system);
+    \draw [thick, ->, >=stealth, red, dashed] (system.east)+(0,-0.25) -- +(2,-0.25);
+    \draw [thick, ->, >=stealth, black!50!green] (system.east)+(0,0.25) -| +(0.75,2);
+    \draw [thick, ->, >=stealth, black!50!green] (patch.south)+(0.25,0) |- +(1,-1.75);
+  \end{tikzpicture}
   \caption{The function calls from the system are intercepted by our patch and forwarded after modification to the original function.}
   \label{fig:patch}
 \end{figure}
@@ -623,7 +621,25 @@ This experiment aimed to observe how the patch influenced the consistency of sen
 By analyzing the recorded data, we could determine the extent to which the patch successfully obfuscated the sensor values.
 Comparing the consistency of the sensor readouts before and after applying the patch, a significant change can be observed in Figure \ref{fig:values}, mirroring the findings of previous research studies. 
 Before the application of our patch, the sensor values exhibit a high degree of consistency, which can be exploited for fingerprinting.
-However, after the patch introduces randomization and noise, the sensor readouts become visibly less consistent.
+However, after the patch introduces randomization and noise, the sensor readouts become visibly less consistent as it is visualized in Figure \ref{fig:knn_decision_boundaries}.
+
+\begin{figure}[h!]
+  \centering
+  \captionsetup{justification=centering}
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/knn_before.png}
+    \caption{knn decision boundaries\\before applying noise}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/knn_after.png}
+    \caption{knn decision boundaries\\after applying noise}
+  \end{subfigure}
+  \caption{3D visualization of KNN decision boundaries.}
+  \label{fig:knn_decision_boundaries}
+\end{figure}
 
 When the classification algorithm used the unpatched, unmasked data it was able to associate all of the devices with their measurement with 100\% confidence.
 After applying the patch and retraining the algorithm it was only able to match the devices with 72.916\% accuracy, even with our few samples of ten devices as shown in Figure \ref{tab:knn_results}. 
@@ -693,6 +709,7 @@ This observed change underscores the effectiveness of the patch in enhancing pri
   \label{tab:knn_detailed_results}
 \end{table}
 
+\pagebreak
 \subsection{Usability}
 \label{subsec:usability}
 The patch was applied to a motion-controlled game \cite{krassesSpiel} to assess its impact on user experience.
