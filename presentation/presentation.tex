@@ -22,17 +22,18 @@
 \usepackage[english]{babel}
 %% Choose your main language:
 % [ngerman]   % German
-% [english]   % English
+[english]   % English
 
 
 %% Add your own packages, macros, etc.
+\usepackage[absolute,overlay]{textpos}
 % ...
 
 
 %% Enter presentation metadata
-\title[AndroGUARD]{AndroGUARD: \\Implementing fingerprinting mitigation\\on Android}
+\title[AndroGUARD]{AndroGUARD:\\Mitigation of Sensor Fingerprinting\\on Android}
 \author{Gergö Kranz}
-\date{05.07.2024}
+\date{20.02.2025}
 \institute{IAIK}
 \instituteurl{www.iaik.tugraz.at}
 
@@ -63,27 +64,16 @@
 \end{frame}
 
 
-\section{Motivation}
+\section{Introduction}
 
-\begin{frame}{Motivation}
-  \hfill \hfill \hfill \hfill \hfill \hfill \hfill
-  \begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{figures/eyes.png}
-  \end{figure}
-\end{frame}
-
-
-\section{Fingerprinting}
-
-\begin{frame}{How does Fingerprinting work}
+\begin{frame}{Introduction}
   \begin{minipage}{0.49\textwidth} 
     \begin{itemize}
-      \item Extract information about the system
+      \item Misuse of the Android API
       \pause
-      \item Analyse extracted information
+      \item Used for targeted advertisements
       \pause
-      \item Combine unique values into a unique identifier
+      \item Does not require user permission
     \end{itemize}
   \end{minipage}
   \hfill
@@ -95,12 +85,49 @@
   \end{minipage}
 \end{frame}
 
-\begin{frame}{Fingerprinting Sensors}
+
+\section{Background}
+
+\begin{frame}{Browser Fingerprinting Methodologies}
   \begin{minipage}{0.49\textwidth} 
     \begin{itemize}
-      \item Builtin Error
-      \item Is consistent over the lifetime of the sensor
-      \item Hardware can be uniquely identified
+      \item Analyzing various browser-specific attributes
+      \pause
+      \item Can be used to distinguish users across sessions
+    \end{itemize}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.49\textwidth} 
+    \begin{figure}
+      \centering
+      \includegraphics[height=0.5\textheight]{figures/browser.png}
+    \end{figure}
+  \end{minipage}
+\end{frame}
+
+\begin{frame}{Browser Fingerprinting Protections}
+  \begin{minipage}{0.49\textwidth} 
+    \begin{itemize}
+      \item Blocking the execution of JavaScript
+      \pause
+      \item Introduction of controlled randomization
+    \end{itemize}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.49\textwidth} 
+    \begin{figure}
+      \centering
+      \includegraphics[height=0.5\textheight]{figures/jshelter.png}
+      \caption{JShelter}
+    \end{figure}
+  \end{minipage}
+\end{frame}
+
+\begin{frame}{Smartphone Fingerprinting}
+  \begin{minipage}{0.49\textwidth} 
+    \begin{itemize}
+      \item Zero permission identifiers
+      \item Personalized configurations
     \end{itemize}
   \end{minipage}
   \hfill
@@ -112,11 +139,15 @@
   \end{minipage}
 \end{frame}
 
+
+\section{Sensor Fingerprinting}
+
 \begin{frame}{Fingerprinting Sensors}
   \begin{minipage}{0.49\textwidth} 
     \begin{itemize}
-      \item Records multiple measurements
-      \item Calculates the deviation from expected values
+      \item Measurement inaccuracy of sensors
+      \item Simple to fingerprint via machine learning algorithmus
+      \item Is constant over the sensors lifetime
     \end{itemize}
   \end{minipage}
   \hfill
@@ -128,11 +159,12 @@
   \end{minipage}
 \end{frame}
 
-\section{Main Question}
+
+\section{Methodology}
 
 \begin{frame}{Main Question}
   \begin{minipage}{0.525\textwidth} 
-    How to protect against fingerprinting
+    How to protect against\\sensor fingerprinting
   \end{minipage}
   \hfill
   \begin{minipage}{0.455\textwidth} 
@@ -143,67 +175,45 @@
   \end{minipage}
 \end{frame}
 
-\section{Background on existing work}
-
-\begin{frame}{Existing Methods}
+\begin{frame}<1>[label=props_sols]{Proposed Solutions}
   \begin{minipage}{0.49\textwidth} 
     \begin{itemize}
-      \item Access Control
+      \item<1> Calibration
+      \item<2> Noise Generation
     \end{itemize}
   \end{minipage}
   \hfill
   \begin{minipage}{0.49\textwidth} 
     \begin{figure}
       \centering
-      \includegraphics[height=0.5\textheight]{figures/android.png}
+      \includegraphics[height=0.5\textheight]{figures/light-bulb.png}
     \end{figure}
   \end{minipage}
 \end{frame}
 
-\begin{frame}{Related Works}
+\begin{frame}{Calibration}
   \begin{minipage}{0.49\textwidth} 
     \begin{itemize}
-      \item Many papers are looking into exploiting sensor fingerprinting
-      \pause
-      \item Do not implement a solution for the Android API
+      \item Systematic adjustment of sensor readings
+      \item Correcting the sensor data
     \end{itemize}
   \end{minipage}
   \hfill
   \begin{minipage}{0.49\textwidth} 
     \begin{figure}
       \centering
-      \includegraphics[height=0.5\textheight]{figures/paper.png}
+      \includegraphics[height=0.5\textheight]{figures/download.png}
     \end{figure}
   \end{minipage}
 \end{frame}
 
-\begin{frame}{Proposed Solutions}
-  \begin{minipage}{0.49\textwidth} 
-    \begin{itemize}
-      \item Recalibrate the sensors to be perfect
-      \begin{itemize}
-        \item Gets rid of the error
-        \item Can not be done easily
-      \end{itemize}
-    \end{itemize}
-  \end{minipage}
-  \hfill
-  \begin{minipage}{0.49\textwidth} 
-    \begin{figure}
-      \centering
-      \includegraphics[height=0.5\textheight]{figures/tool.png}
-    \end{figure}
-  \end{minipage}
-\end{frame}
+\againframe<2->{props_sols}
 
-\begin{frame}{Proposed Solutions}
+\begin{frame}{Noise Generation}
   \begin{minipage}{0.49\textwidth} 
     \begin{itemize}
-      \item Add noise to conceal the calibration errors
-      \begin{itemize}
-        \item Apply a random offset and gain to each measurement
-        \item Can be done without any user interaction
-      \end{itemize}
+      \item Introduces variability into the sensor data
+      \item Masks the original values
     \end{itemize}
   \end{minipage}
   \hfill
@@ -215,26 +225,168 @@
   \end{minipage}
 \end{frame}
 
-\section{Our Approach}
-
-\begin{frame}{Protecting Sensors}
+\begin{frame}<1>[label=props_challs]{Challenges}
   \begin{minipage}{0.49\textwidth} 
     \begin{itemize}
-      \item Mask builtin error by added noise
-      \pause
-      \item Use the A2P2 framework for deployment
+      \item<1> Calibration
+      \item<2> Noise Generation
     \end{itemize}
   \end{minipage}
   \hfill
   \begin{minipage}{0.49\textwidth} 
     \begin{figure}
       \centering
-      \includegraphics[height=0.5\textheight]{figures/analog.png}
+      \includegraphics[height=0.5\textheight]{figures/exclamation.png}
     \end{figure}
   \end{minipage}
 \end{frame}
 
-\begin{frame}{Implementation}
+\begin{frame}{Calibration}
+  \begin{minipage}{0.49\textwidth} 
+    \begin{itemize}
+      \item Requires user awareness and interaction
+      \item Requires precision
+    \end{itemize}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.49\textwidth} 
+    \begin{figure}
+      \centering
+      \includegraphics[height=0.5\textheight]{figures/download.png}
+    \end{figure}
+  \end{minipage}
+\end{frame}
+
+\againframe<2->{props_challs}
+
+\begin{frame}{Noise Generation}
+  \begin{minipage}{0.49\textwidth} 
+    \begin{itemize}
+      \item Degrade the functionality of applications
+      \item Code has to be modified
+    \end{itemize}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.49\textwidth} 
+    \begin{figure}
+      \centering
+      \includegraphics[height=0.5\textheight]{figures/noise.png}
+    \end{figure}
+  \end{minipage}
+\end{frame}
+
+\section{Approach}
+
+\begin{frame}{Our Methodology}
+  \begin{minipage}{0.49\textwidth} 
+    \begin{itemize}
+      \item Noise Generation
+      \item Patch application vie A2P2 framework
+    \end{itemize}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.49\textwidth} 
+    \begin{figure}
+      \centering
+      \includegraphics[height=0.5\textheight]{figures/android.png}
+    \end{figure}
+  \end{minipage}
+\end{frame}
+
+\begin{frame}{Modifying the Sensor API}
+  \begin{minipage}{0.49\textwidth} 
+    \begin{itemize}
+      \item Intercept calls to registerListener method
+      \pause
+      \item Provide modified values to onSensorChanged method
+    \end{itemize}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.49\textwidth} 
+    \begin{figure}
+      \centering
+      \includegraphics[height=0.5\textheight]{figures/code.png}
+    \end{figure}
+  \end{minipage}
+\end{frame}
+
+\begin{frame}{Noise Generation}
+  \begin{minipage}{0.49\textwidth} 
+    \begin{itemize}
+      \item Adds random gain and offset to every value
+      \item masks values
+    \end{itemize}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.49\textwidth} 
+    \begin{figure}
+      \centering
+      \includegraphics[height=0.5\textheight]{figures/noise.png}
+    \end{figure}
+  \end{minipage}
+\end{frame}
+
+\begin{frame}{Loss of Precision}
+  \begin{minipage}{0.49\textwidth} 
+    \begin{itemize}
+      \item 
+    \end{itemize}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.49\textwidth} 
+    \begin{figure}
+      \centering
+      \includegraphics[height=0.5\textheight]{figures/noise.png}
+    \end{figure}
+  \end{minipage}
+\end{frame}
+
+\section{Implementation}
+
+\begin{frame}<1>[label=impl]{Implementation}
+  \begin{minipage}{0.49\textwidth} 
+    \begin{itemize}
+      \item Intercept Method
+      \pause
+      \item Noise Generating Function
+      \pause
+      \item Random Value Generation Function
+    \end{itemize}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.49\textwidth} 
+    \begin{figure}
+      \centering
+      \includegraphics[height=0.5\textheight]{figures/java.png}
+    \end{figure}
+  \end{minipage}
+\end{frame}
+
+\begin{frame}{Intercept Method}
+  \begin{textblock*}{\textwidth}(30pt,50pt)
+  \begin{figure}
+    \centering
+    \begin{tikzpicture}
+      \tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black]
+
+      \node (sensor) [process] at (0,0) {Sensor value changes};
+      \node (system) [process] at (5,0) {System};
+      \node (patch) [process, black!50!green] at (7.5,2.5) {Patch};
+      \node (function) [process] at (10,0) {Original};
+
+      \draw [thick, ->, >=stealth] (sensor) -- (system);
+      \draw [thick, ->, >=stealth, red, dashed] (system.east)+(0,-0.25) -- +(2,-0.25);
+      \draw [thick, ->, >=stealth, black!50!green] (system.east)+(0,0.25) -| +(0.75,2);
+      \draw [thick, ->, >=stealth, black!50!green] (patch.south)+(0.25,0) |- +(1,-1.75);
+    \end{tikzpicture}
+    \caption{The function calls from the system are intercepted by our patch and forwarded after modification to the original function.}
+  \end{figure}
+  \end{textblock*}
+\end{frame}
+
+\againframe<2->{impl}
+
+\begin{frame}{Application of Patch}
   \begin{minipage}{0.49\textwidth} 
     \begin{itemize}
       \item Intercept the original method
@@ -248,14 +400,14 @@
   \begin{minipage}{0.49\textwidth} 
     \begin{figure}
       \centering
-      \includegraphics[height=0.5\textheight]{figures/java.png}
+      \includegraphics[height=0.5\textheight]{figures/download.png}
     \end{figure}
   \end{minipage}
 \end{frame}
 
-\section{Deployment}
+\section{Evaluation}
 
-\begin{frame}{A2P2}
+\begin{frame}{Testing}
   \begin{minipage}{0.49\textwidth} 
     \begin{itemize}
       \item Incorporates the patch into a valid APK
@@ -272,9 +424,76 @@
   \end{minipage}
 \end{frame}
 
-\section{Validation}
+\begin{frame}{Functionality}
+  \begin{minipage}{0.49\textwidth} 
+    \begin{itemize}
+      \item Incorporates the patch into a valid APK
+      \item Intercepts the original function calls
+      \item Executes the patch
+    \end{itemize}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.49\textwidth} 
+    \begin{figure}
+      \centering
+      \includegraphics[height=0.5\textheight]{figures/code.png}
+    \end{figure}
+  \end{minipage}
+\end{frame}
 
-\begin{frame}{Validation}
+\begin{frame}{Effectiveness}
+  \begin{minipage}{0.49\textwidth}
+    \begin{figure}
+      \centering
+      \includegraphics[height=0.65\textheight]{figures/knn_before.png}
+    \end{figure}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.49\textwidth}
+    \begin{figure}
+      \centering
+      \includegraphics[height=0.65\textheight]{figures/knn_after.png}
+    \end{figure}
+  \end{minipage}
+\end{frame}
+
+\begin{frame}{Usability}
+  \begin{minipage}{0.49\textwidth} 
+    \begin{itemize}
+      \item Incorporates the patch into a valid APK
+      \item Intercepts the original function calls
+      \item Executes the patch
+    \end{itemize}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.49\textwidth} 
+    \begin{figure}
+      \centering
+      \includegraphics[height=0.5\textheight]{figures/code.png}
+    \end{figure}
+  \end{minipage}
+\end{frame}
+
+\begin{frame}{Noise Level Adjustment}
+  \begin{minipage}{0.49\textwidth} 
+    \begin{itemize}
+      \item Incorporates the patch into a valid APK
+      \item Intercepts the original function calls
+      \item Executes the patch
+    \end{itemize}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.49\textwidth} 
+    \begin{figure}
+      \centering
+      \includegraphics[height=0.5\textheight]{figures/noise.png}
+    \end{figure}
+  \end{minipage}
+\end{frame}
+
+\section{Discussion \& Limitations}
+
+\begin{frame}{Discussion \& Limitations}
   \begin{minipage}{0.49\textwidth} 
     \begin{itemize}
       \item Comparing values before and after the patch
