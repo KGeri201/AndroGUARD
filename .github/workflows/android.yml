@@ -24,8 +24,9 @@ jobs:
         cache: gradle
 
     - name: set up a2p2
-      run: curl -sS https://extgit.iaik.tugraz.at/fdraschbacher/a2p2/-/raw/main/a2p2_distribution_v1.0.1.zip > a2p2.zip && unzip a2p2.zip -d a2p2 && rm a2p2.zip 
       working-directory: code/
+      run: wget -O a2p2.zip https://extgit.iaik.tugraz.at/fdraschbacher/a2p2/-/raw/main/a2p2_distribution_v1.0.1.zip && unzip a2p2.zip -d a2p2 && rm a2p2.zip 
+      #run: curl -sS https://extgit.iaik.tugraz.at/fdraschbacher/a2p2/-/raw/main/a2p2_distribution_v1.0.1.zip > a2p2.zip && unzip a2p2.zip -d a2p2 && rm a2p2.zip 
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
