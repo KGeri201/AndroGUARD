@@ -92,7 +92,6 @@
   \begin{minipage}{0.49\textwidth} 
     \begin{itemize}
       \item Analyzing various browser-specific attributes
-      \pause
       \item Can be used to distinguish users across sessions
     \end{itemize}
   \end{minipage}
@@ -109,7 +108,6 @@
   \begin{minipage}{0.49\textwidth} 
     \begin{itemize}
       \item Blocking the execution of JavaScript
-      \pause
       \item Introduction of controlled randomization
     \end{itemize}
   \end{minipage}
@@ -134,7 +132,7 @@
   \begin{minipage}{0.49\textwidth} 
     \begin{figure}
       \centering
-      \includegraphics[height=0.5\textheight]{figures/machine.png}
+      \includegraphics[height=0.5\textheight]{figures/smartphone.png}
     \end{figure}
   \end{minipage}
 \end{frame}
@@ -146,15 +144,17 @@
   \begin{minipage}{0.49\textwidth} 
     \begin{itemize}
       \item Measurement inaccuracy of sensors
+      \pause
       \item Simple to fingerprint via machine learning algorithmus
-      \item Is constant over the sensors lifetime
+      \pause
+      \item Constant over the sensors lifetime
     \end{itemize}
   \end{minipage}
   \hfill
-  \begin{minipage}{0.49\textwidth} 
+  \begin{minipage}{0.49\textwidth}
     \begin{figure}
       \centering
-      \includegraphics[height=0.5\textheight]{figures/download.png}
+      \includegraphics[height=0.5\textheight]{figures/analog.png}
     \end{figure}
   \end{minipage}
 \end{frame}
@@ -163,11 +163,11 @@
 \section{Methodology}
 
 \begin{frame}{Main Question}
-  \begin{minipage}{0.525\textwidth} 
-    How to protect against\\sensor fingerprinting
+  \begin{minipage}{0.65\textwidth} 
+    How to protect against sensor fingerprinting
   \end{minipage}
   \hfill
-  \begin{minipage}{0.455\textwidth} 
+  \begin{minipage}{0.34\textwidth} 
     \begin{figure}
       \centering
       \includegraphics[height=0.5\textheight]{figures/question.png}
@@ -202,7 +202,7 @@
   \begin{minipage}{0.49\textwidth} 
     \begin{figure}
       \centering
-      \includegraphics[height=0.5\textheight]{figures/download.png}
+      \includegraphics[height=0.5\textheight]{figures/tool.png}
     \end{figure}
   \end{minipage}
 \end{frame}
@@ -252,7 +252,7 @@
   \begin{minipage}{0.49\textwidth} 
     \begin{figure}
       \centering
-      \includegraphics[height=0.5\textheight]{figures/download.png}
+      \includegraphics[height=0.5\textheight]{figures/tool.png}
     \end{figure}
   \end{minipage}
 \end{frame}
@@ -274,6 +274,7 @@
     \end{figure}
   \end{minipage}
 \end{frame}
+
 
 \section{Approach}
 
@@ -297,7 +298,6 @@
   \begin{minipage}{0.49\textwidth} 
     \begin{itemize}
       \item Intercept calls to registerListener method
-      \pause
       \item Provide modified values to onSensorChanged method
     \end{itemize}
   \end{minipage}
@@ -314,7 +314,8 @@
   \begin{minipage}{0.49\textwidth} 
     \begin{itemize}
       \item Adds random gain and offset to every value
-      \item masks values
+      \item Masks values
+      \item Loss of precision
     \end{itemize}
   \end{minipage}
   \hfill
@@ -326,20 +327,6 @@
   \end{minipage}
 \end{frame}
 
-\begin{frame}{Loss of Precision}
-  \begin{minipage}{0.49\textwidth} 
-    \begin{itemize}
-      \item 
-    \end{itemize}
-  \end{minipage}
-  \hfill
-  \begin{minipage}{0.49\textwidth} 
-    \begin{figure}
-      \centering
-      \includegraphics[height=0.5\textheight]{figures/noise.png}
-    \end{figure}
-  \end{minipage}
-\end{frame}
 
 \section{Implementation}
 
@@ -405,38 +392,22 @@
   \end{minipage}
 \end{frame}
 
+
 \section{Evaluation}
 
-\begin{frame}{Testing}
+\begin{frame}<-2>[label=testing]{Testing}
   \begin{minipage}{0.49\textwidth} 
     \begin{itemize}
-      \item Incorporates the patch into a valid APK
-      \item Intercepts the original function calls
-      \item Executes the patch
+      \item<1-> Functionality
+      \item<2-> Effectiveness
+      \item<3-> Usabilty
     \end{itemize}
   \end{minipage}
   \hfill
   \begin{minipage}{0.49\textwidth} 
     \begin{figure}
       \centering
-      \includegraphics[height=0.5\textheight]{figures/code.png}
-    \end{figure}
-  \end{minipage}
-\end{frame}
-
-\begin{frame}{Functionality}
-  \begin{minipage}{0.49\textwidth} 
-    \begin{itemize}
-      \item Incorporates the patch into a valid APK
-      \item Intercepts the original function calls
-      \item Executes the patch
-    \end{itemize}
-  \end{minipage}
-  \hfill
-  \begin{minipage}{0.49\textwidth} 
-    \begin{figure}
-      \centering
-      \includegraphics[height=0.5\textheight]{figures/code.png}
+      \includegraphics[height=0.5\textheight]{figures/test-tube.png}
     \end{figure}
   \end{minipage}
 \end{frame}
@@ -457,39 +428,25 @@
   \end{minipage}
 \end{frame}
 
-\begin{frame}{Usability}
-  \begin{minipage}{0.49\textwidth} 
-    \begin{itemize}
-      \item Incorporates the patch into a valid APK
-      \item Intercepts the original function calls
-      \item Executes the patch
-    \end{itemize}
-  \end{minipage}
-  \hfill
-  \begin{minipage}{0.49\textwidth} 
-    \begin{figure}
-      \centering
-      \includegraphics[height=0.5\textheight]{figures/code.png}
-    \end{figure}
-  \end{minipage}
-\end{frame}
+\againframe<3->{testing}
 
 \begin{frame}{Noise Level Adjustment}
   \begin{minipage}{0.49\textwidth} 
     \begin{itemize}
-      \item Incorporates the patch into a valid APK
-      \item Intercepts the original function calls
-      \item Executes the patch
+      \item Increasing noise decreases fingerprintability
+      \item Increasing noise decreases functionality
+      \item Noise has to be balanced between effectiveness and functionality
     \end{itemize}
   \end{minipage}
   \hfill
   \begin{minipage}{0.49\textwidth} 
     \begin{figure}
       \centering
-      \includegraphics[height=0.5\textheight]{figures/noise.png}
+      \includegraphics[height=0.5\textheight]{figures/graph.png}
     \end{figure}
   \end{minipage}
 \end{frame}
+
 
 \section{Discussion \& Limitations}
 
@@ -504,10 +461,11 @@
   \begin{minipage}{0.49\textwidth} 
     \begin{figure}
       \centering
-      \includegraphics[height=0.5\textheight]{figures/graph.png}
+      \includegraphics[height=0.5\textheight]{figures/comments.png}
     \end{figure}
   \end{minipage}
 \end{frame}
+
 
 \section*{}
 
