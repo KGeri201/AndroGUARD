@@ -5,14 +5,14 @@
 ]{scrreprt}
 
 % Settings
-\usepackage[ngerman,english]{babel}
+\usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{geometry}
 \usepackage{microtype}
 \usepackage[all]{nowidow}
 \usepackage[bsc,             % for Bachelor's Thesis titlepage
             %project,        % for Master's Project titlepage
-            claim,iaik]{iaikthesis}
+            claim,isec]{isecthesis}
 \addtokomafont{disposition}{\rmfamily}
 
 % <INSERT YOUR CUSTOM MACROS AND PACKAGES HERE>
@@ -123,7 +123,7 @@
   Gerald Palfinger
   \smallskip
 
-  Institute of Applied Information Processing and Communications\\
+  Institute of Information Security\\
   Graz University of Technology
 }
 
@@ -200,7 +200,7 @@ By introducing random variations to sensor outputs, we can obscure unique error 
 Our approach not only addresses the vulnerabilities highlighted in the literature but also provides practical solutions to enhance the privacy and security of Android users.
 
 \paragraph{Outline.}
-In Chapter \ref{chap:background}, we offer an overview of general fingerprinting techniques applicable to both browsers and smartphones. 
+In Chapter \ref{chap:background}, we offer an overview of general fingerprinting techniques. 
 Moving forward to Chapter \ref{chap:sensor_fingerprint}, we focus on sensor fingerprinting, where we detail its mechanics, common sensor types targeted, and real-world implications.
 Building on this information, in Chapter \ref{chap:methodology} we examine existing countermeasures against fingerprinting, evaluating their effectiveness and limitations to provide context for our proposed solution. 
 Chapter \ref{chap:approach} investigates the mitigation concepts presented in prior research, understanding relevant literature for our implementation of the selected mitigation strategy.
@@ -222,37 +222,14 @@ For example, they may use the collected data to tailor phishing attempts or deli
 Detailed fingerprinting could potentially expose a variety of sensitive information that, when combined, may lead to identity theft or other fraudulent activities.
 Due to this, users might feel uncomfortable or even violated if they perceive that too much of their personal information is being used without their control.
 The practice of extensive fingerprinting may run against data protection regulations such as GDPR, which require explicit user consent for collecting and processing personal data.
-In the following, we will explore browser and mobile fingerprinting, focusing on their similarities and differences.
 
-\section{Browser Fingerprinting}
-\label{sec:browser_fingerprint}
-Browser fingerprinting is a widely known technique, which is frequently exploited to track users across different websites \cite{DBLP:conf/secrypt/PolcakSMHM23}.
-By using mainly JavaScript the visited website can access system information like screen resolution or settings set by the user.
-These attributes can be combined to create a unique identifier of the device.
+Mobile fingerprinting operates in a manner that is very similar to the more widely recognized technique of browser fingerprinting.
+In browser fingerprinting, publicly accessible attributes of a browser - such as screen resolution, installed plugins, user agent strings, and other system-level identifiers - are collected and aggregated to generate a unique fingerprint capable of identifying a user or device \cite{DBLP:conf/ntms/UpathilakeLM15}.
+The wide usage of browser fingerprinting has led to a substantial body of research and the development of protective measures designed to mitigate its impact \cite{DBLP:conf/secrypt/PolcakSMHM23}.
+These countermeasures often involve the obfuscation or masking of data points that contribute to the creation of a unique fingerprint, such as randomizing user agent strings or preventing access to certain browser APIs \cite{DBLP:conf/secrypt/PolcakSMHM23, DBLP:conf/www/NikiforakisJL15, DBLP:conf/esorics/TorresJM15}.
 
-\paragraph{Browser Fingerprinting Methodologies.}
-\label{par:browser_fingerprint}
-Different methods can be applied to fingerprint a browser as shown by \citeauthor{DBLP:conf/ntms/UpathilakeLM15} \cite{DBLP:conf/ntms/UpathilakeLM15}.
-Browsers can be fingerprinted by analyzing various browser-specific attributes, such as the browser version, installed fonts, and other identifiable characteristics.
-Additionally, HTML5 functionalities, particularly the rendering of text and WebGL scenes via the canvas element, can be leveraged to generate a fingerprint.
-By rendering content and subsequently retrieving pixel data from the canvas, a unique identifier based on subtle differences in how the browser displays these elements can be constructed.
-This technique allows for the creation of a detailed fingerprint that can be used to distinguish users across sessions.
-JavaScript can also be used to create cross-browser fingerprints, which is browser independent and focuses more on the hardware the browser is running on, like screen resolution or networking information.
-With the use of JavaScript also sensor data can be accessed to create sensor fingerprints.
-
-\paragraph{Browser Fingerprinting Protections.}
-\label{par:browser_fingerprint_protect}
-A number of solutions have already been presented in multiple research papers to identify and block fingerprinting efforts, making browsing the internet more private for everyone. 
-JShelter \cite{DBLP:conf/secrypt/PolcakSMHM23} blocks the execution of JavaScript to mitigate the gathering of personal data used for fingerprinting to increase browser security.
-Another study, PriVaricator \cite{DBLP:conf/www/NikiforakisJL15}, aims to reduce the determinism of browser fingerprints by introducing controlled randomization, thereby mitigating the ability to consistently identify users across multiple visits to the same website.
-This approach disrupts the reliability of fingerprinting techniques by making the data less predictable and harder to track.
-These research projects disrupt the consistent behavior required by features like adaptive layouts, multimedia rendering, and security mechanisms, leading to broken or degraded functionality. 
-To solve this issue FP-Block \cite{DBLP:conf/esorics/TorresJM15} creates a different unrelated fingerprint for the embedded resources to maintain their functionality, but prevent tracking.
-
-\section{Smartphone Fingerprinting}
-\label{sec:smartphone_fingerprint}
 The concepts underlying browser fingerprinting can similarly be applied in the context of smartphone applications \cite{DBLP:conf/IEEEares/PalfingerP20}. 
-Different sensor and system information are accessed through the use of the mobile API, in order to create a unique identifier.
+Similarly, mobile fingerprinting relies on the extraction of various device specific characteristics, such as the mobile operating system, device model, screen dimensions, app usage data, and other hardware or software attributes, to construct a unique identifier for the device.
 
 A study by \citeauthor{DBLP:conf/www/Gomez-BoixLB18}, about mobile browsers, highlights the differences the distinct behaviors in the absence of plugins like Flash \cite{DBLP:conf/www/Gomez-BoixLB18}.
 The analysis covers over 17,000 mobile fingerprints collected, finding that 81\% of these fingerprints are unique. 

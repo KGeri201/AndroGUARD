@@ -34,8 +34,8 @@
 \title[AndroGUARD]{AndroGUARD:\\Mitigation of Sensor Fingerprinting\\on Android}
 \author{Gergö Kranz}
 \date{20.02.2025}
-\institute{IAIK}
-\instituteurl{www.iaik.tugraz.at}
+\institute{ISEC}
+\instituteurl{www.isec.tugraz.at}
 
 %% Logos
 % \institutelogo{beamerthemetugraz/institute/kurz}  % graphical acronym for [institute] theme (left margin)
@@ -88,43 +88,15 @@
 
 \section{Background}
 
-\begin{frame}{Browser Fingerprinting Methodologies}
-  \begin{minipage}{0.49\textwidth} 
-    \begin{itemize}
-      \item Analyzing various browser-specific attributes
-      \item Can be used to distinguish users across sessions
-    \end{itemize}
-  \end{minipage}
-  \hfill
-  \begin{minipage}{0.49\textwidth} 
-    \begin{figure}
-      \centering
-      \includegraphics[height=0.5\textheight]{figures/browser.png}
-    \end{figure}
-  \end{minipage}
-\end{frame}
-
-\begin{frame}{Browser Fingerprinting Protections}
-  \begin{minipage}{0.49\textwidth} 
-    \begin{itemize}
-      \item Blocking the execution of JavaScript
-      \item Introduction of controlled randomization
-    \end{itemize}
-  \end{minipage}
-  \hfill
-  \begin{minipage}{0.49\textwidth} 
-    \begin{figure}
-      \centering
-      \includegraphics[height=0.5\textheight]{figures/jshelter.png}
-      \caption{JShelter}
-    \end{figure}
-  \end{minipage}
-\end{frame}
-
 \begin{frame}{Smartphone Fingerprinting}
   \begin{minipage}{0.49\textwidth} 
     \begin{itemize}
+      \item Similar to browser fingerprinting
+      \pause
+      \item Not as known as browser fingerprinting
+      \pause
       \item Zero permission identifiers
+      \pause
       \item Personalized configurations
     \end{itemize}
   \end{minipage}
@@ -175,24 +147,9 @@
   \end{minipage}
 \end{frame}
 
-\begin{frame}<1>[label=props_sols]{Proposed Solutions}
+\begin{frame}{Proposed Solutions}
   \begin{minipage}{0.49\textwidth} 
-    \begin{itemize}
-      \item<1> Calibration
-      \item<2> Noise Generation
-    \end{itemize}
-  \end{minipage}
-  \hfill
-  \begin{minipage}{0.49\textwidth} 
-    \begin{figure}
-      \centering
-      \includegraphics[height=0.5\textheight]{figures/light-bulb.png}
-    \end{figure}
-  \end{minipage}
-\end{frame}
-
-\begin{frame}{Calibration}
-  \begin{minipage}{0.49\textwidth} 
+    Calibration
     \begin{itemize}
       \item Systematic adjustment of sensor readings
       \item Correcting the sensor data
@@ -200,78 +157,29 @@
   \end{minipage}
   \hfill
   \begin{minipage}{0.49\textwidth} 
-    \begin{figure}
-      \centering
-      \includegraphics[height=0.5\textheight]{figures/tool.png}
-    \end{figure}
-  \end{minipage}
-\end{frame}
-
-\againframe<2->{props_sols}
-
-\begin{frame}{Noise Generation}
-  \begin{minipage}{0.49\textwidth} 
+    Noise Generation
     \begin{itemize}
       \item Introduces variability into the sensor data
       \item Masks the original values
     \end{itemize}
   \end{minipage}
-  \hfill
-  \begin{minipage}{0.49\textwidth} 
-    \begin{figure}
-      \centering
-      \includegraphics[height=0.5\textheight]{figures/noise.png}
-    \end{figure}
-  \end{minipage}
 \end{frame}
 
-\begin{frame}<1>[label=props_challs]{Challenges}
+\begin{frame}{Challenges}
   \begin{minipage}{0.49\textwidth} 
+    Calibration
     \begin{itemize}
-      \item<1> Calibration
-      \item<2> Noise Generation
-    \end{itemize}
-  \end{minipage}
-  \hfill
-  \begin{minipage}{0.49\textwidth} 
-    \begin{figure}
-      \centering
-      \includegraphics[height=0.5\textheight]{figures/exclamation.png}
-    \end{figure}
-  \end{minipage}
-\end{frame}
-
-\begin{frame}{Calibration}
-  \begin{minipage}{0.49\textwidth} 
-    \begin{itemize}
-      \item Requires user awareness and interaction
+      \item Requires user awareness\\and interaction
       \item Requires precision
     \end{itemize}
   \end{minipage}
   \hfill
   \begin{minipage}{0.49\textwidth} 
-    \begin{figure}
-      \centering
-      \includegraphics[height=0.5\textheight]{figures/tool.png}
-    \end{figure}
-  \end{minipage}
-\end{frame}
-
-\againframe<2->{props_challs}
-
-\begin{frame}{Noise Generation}
-  \begin{minipage}{0.49\textwidth} 
+    Noise Generation
     \begin{itemize}
       \item Degrade the functionality of applications
       \item Code has to be modified
     \end{itemize}
-  \end{minipage}
-  \hfill
-  \begin{minipage}{0.49\textwidth} 
-    \begin{figure}
-      \centering
-      \includegraphics[height=0.5\textheight]{figures/noise.png}
-    \end{figure}
   \end{minipage}
 \end{frame}
 
@@ -371,16 +279,28 @@
   \end{textblock*}
 \end{frame}
 
-\againframe<2->{impl}
+\againframe<2>{impl}
+
+\begin{frame}{Noise Generating Function}
+  \begin{center}
+    \begin{align*}
+      value_{new} = \frac{(value_{old} - offset_{sensor})}{gain_{sensor}}
+    \end{align*}
+  \end{center}
+\end{frame}
+
+\againframe<3->{impl}
 
 \begin{frame}{Application of Patch}
   \begin{minipage}{0.49\textwidth} 
     \begin{itemize}
-      \item Intercept the original method
-      \pause
-      \item Apply appropriate random noise
-      \pause
-      \item Return obstructed sensor data to original method
+      \item Straightforward application 
+      \item Only requirements are
+      \begin{itemize}
+        \item JAVA JRE
+        \item A2P2
+        \item APK to be modified
+      \end{itemize}
     \end{itemize}
   \end{minipage}
   \hfill
@@ -395,7 +315,7 @@
 
 \section{Evaluation}
 
-\begin{frame}<-2>[label=testing]{Testing}
+\begin{frame}<-1>[label=testing]{Testing}
   \begin{minipage}{0.49\textwidth} 
     \begin{itemize}
       \item<1-> Functionality
@@ -412,18 +332,40 @@
   \end{minipage}
 \end{frame}
 
-\begin{frame}{Effectiveness}
+\begin{frame}{Functionality}
   \begin{minipage}{0.49\textwidth}
     \begin{figure}
       \centering
-      \includegraphics[height=0.65\textheight]{figures/knn_before.png}
+      \includegraphics[height=0.45\textheight]{figures/SensorValuesBefore.png}
+      \caption{recorded values before the patch}
     \end{figure}
   \end{minipage}
   \hfill
   \begin{minipage}{0.49\textwidth}
     \begin{figure}
       \centering
-      \includegraphics[height=0.65\textheight]{figures/knn_after.png}
+      \includegraphics[height=0.45\textheight]{figures/SensorValuesAfter.png}
+      \caption{recorded values after the patch}
+    \end{figure}
+  \end{minipage}
+\end{frame}
+
+\againframe<2>{testing}
+
+\begin{frame}{Effectiveness}
+  \begin{minipage}{0.49\textwidth}
+    \begin{figure}
+      \centering
+      \includegraphics[height=0.45\textheight]{figures/knn_before.png}
+      \caption{knn decision boundaries before the patch}
+    \end{figure}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.49\textwidth}
+    \begin{figure}
+      \centering
+      \includegraphics[height=0.45\textheight]{figures/knn_after.png}
+      \caption{knn decision boundaries after the patch}
     \end{figure}
   \end{minipage}
 \end{frame}
@@ -435,7 +377,6 @@
     \begin{itemize}
       \item Increasing noise decreases fingerprintability
       \item Increasing noise decreases functionality
-      \item Noise has to be balanced between effectiveness and functionality
     \end{itemize}
   \end{minipage}
   \hfill
