@@ -53,36 +53,6 @@
 
 \usetikzlibrary{shapes.geometric, arrows}
 
-% \lstset{
-%   backgroundcolor=\color{lightgray},   % choose the background color
-%   linebackgroundsep=1em,
-%   basicstyle=\footnotesize,        % size of fonts used for the code
-%   breaklines=true,                 % automatic line breaking only at whitespace
-%   captionpos=b,                    % sets the caption-position to bottom
-%   commentstyle=\color{black!50!green},    % comment style
-%   escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
-%   keywordstyle=\color{blue},       % keyword style
-%   stringstyle=\color{red},     % string literal style
-% }
-
-% \lstset{
-%   backgroundcolor=\color{lightgray},
-%   frame=tb,
-%   showstringspaces=false,
-%   columns=flexible,
-%   basicstyle=\ttfamily\footnotesize,
-%   numbers=none,
-%   numberstyle=\tiny\color{gray},
-%   keywordstyle=\color{blue},
-%   commentstyle=\color{black!50!green},
-%   stringstyle=\color{red!58!black!82},
-  
-%   breaklines=true,
-%   breakatwhitespace=true,
-%   captionpos=b,
-%   tabsize=3
-% }
-
 \lstset{
   frame=tb,
   backgroundcolor=\color{gray!10},   
@@ -222,12 +192,35 @@ For example, they may use the collected data to tailor phishing attempts or deli
 Detailed fingerprinting could potentially expose a variety of sensitive information that, when combined, may lead to identity theft or other fraudulent activities.
 Due to this, users might feel uncomfortable or even violated if they perceive that too much of their personal information is being used without their control.
 The practice of extensive fingerprinting may run against data protection regulations such as GDPR, which require explicit user consent for collecting and processing personal data.
+In the following, we will explore browser and mobile fingerprinting, focusing on their similarities and differences.
 
-Mobile fingerprinting operates in a manner that is very similar to the more widely recognized technique of browser fingerprinting.
-In browser fingerprinting, publicly accessible attributes of a browser - such as screen resolution, installed plugins, user agent strings, and other system-level identifiers - are collected and aggregated to generate a unique fingerprint capable of identifying a user or device \cite{DBLP:conf/ntms/UpathilakeLM15}.
-The wide usage of browser fingerprinting has led to a substantial body of research and the development of protective measures designed to mitigate its impact \cite{DBLP:conf/secrypt/PolcakSMHM23}.
-These countermeasures often involve the obfuscation or masking of data points that contribute to the creation of a unique fingerprint, such as randomizing user agent strings or preventing access to certain browser APIs \cite{DBLP:conf/secrypt/PolcakSMHM23, DBLP:conf/www/NikiforakisJL15, DBLP:conf/esorics/TorresJM15}.
+\section{Browser Fingerprinting}
+\label{sec:browser_fingerprint}
+Browser fingerprinting is a widely known technique, which is frequently exploited to track users across different websites \cite{DBLP:conf/secrypt/PolcakSMHM23}.
+By using mainly JavaScript the visited website can access system information like screen resolution or settings set by the user.
+These attributes can be combined to create a unique identifier of the device.
 
+\paragraph{Browser Fingerprinting Methodologies.}
+\label{par:browser_fingerprint}
+Different methods can be applied to fingerprint a browser as shown by \citeauthor{DBLP:conf/ntms/UpathilakeLM15} \cite{DBLP:conf/ntms/UpathilakeLM15}.
+Browsers can be fingerprinted by analyzing various browser-specific attributes, such as the browser version, installed fonts, and other identifiable characteristics.
+Additionally, HTML5 functionalities, particularly the rendering of text and WebGL scenes via the canvas element, can be leveraged to generate a fingerprint.
+By rendering content and subsequently retrieving pixel data from the canvas, a unique identifier based on subtle differences in how the browser displays these elements can be constructed.
+This technique allows for the creation of a detailed fingerprint that can be used to distinguish users across sessions.
+JavaScript can also be used to create cross-browser fingerprints, which is browser independent and focuses more on the hardware the browser is running on, like screen resolution or networking information.
+With the use of JavaScript also sensor data can be accessed to create sensor fingerprints.
+
+\paragraph{Browser Fingerprinting Protections.}
+\label{par:browser_fingerprint_protect}
+A number of solutions have already been presented in multiple research papers to identify and block fingerprinting efforts, making browsing the internet more private for everyone. 
+JShelter \cite{DBLP:conf/secrypt/PolcakSMHM23} blocks the execution of JavaScript to mitigate the gathering of personal data used for fingerprinting to increase browser security.
+Another study, PriVaricator \cite{DBLP:conf/www/NikiforakisJL15}, aims to reduce the determinism of browser fingerprints by introducing controlled randomization, thereby mitigating the ability to consistently identify users across multiple visits to the same website.
+This approach disrupts the reliability of fingerprinting techniques by making the data less predictable and harder to track.
+These research projects disrupt the consistent behavior required by features like adaptive layouts, multimedia rendering, and security mechanisms, leading to broken or degraded functionality. 
+To solve this issue FP-Block \cite{DBLP:conf/esorics/TorresJM15} creates a different unrelated fingerprint for the embedded resources to maintain their functionality, but prevent tracking.
+
+\section{Smartphone Fingerprinting}
+\label{sec:smartphone_fingerprint}
 The concepts underlying browser fingerprinting can similarly be applied in the context of smartphone applications \cite{DBLP:conf/IEEEares/PalfingerP20}. 
 Similarly, mobile fingerprinting relies on the extraction of various device specific characteristics, such as the mobile operating system, device model, screen dimensions, app usage data, and other hardware or software attributes, to construct a unique identifier for the device.
 
@@ -547,7 +540,7 @@ First, the functionality of the patch is validated through a process involving i
 In order to test not only the functionality but also the effectiveness of the patch we created a simple data gathering app~\cite{sensorprint} to collect unaltered and altered data at the same time. 
 During the evaluation period, the app collects a significant amount of sensor data, which is then split into two distinct sets: a training dataset and a test dataset.
 These recorded values are fed into a machine learning algorithm \cite{DBLP:journals/tifs/AmeriniBCMN17}.
-The training dataset is utilized to train a k-nearest neighbors (k-NN) or random forest classification algorithm, which are standard methods for assessing the variation of data points.
+The training dataset is utilized to train a k-nearest neighbors (knn) or random forest classification algorithm, which are standard methods for assessing the variation of data points.
 By training the algorithms on the modified sensor data, we aim to evaluate how effectively the introduced noise disrupts the unique patterns of the sensor data and prevents accurate fingerprinting.
 We apply gridsearch to determine the best possible parameters for the highest accuracy.
 The test dataset is subsequently used to validate the trained algorithm, allowing us to measure the classification accuracy and determine whether the patch has successfully reduced fingerprintability.
@@ -614,7 +607,7 @@ However, after the patch introduces randomization and noise, the sensor readouts
     \includegraphics[width=\textwidth]{figures/knn_after.png}
     \caption{knn decision boundaries\\after applying noise}
   \end{subfigure}
-  \caption{3D visualization of KNN decision boundaries.}
+  \caption{3D visualization of knn decision boundaries.}
   \label{fig:knn_decision_boundaries}
 \end{figure}
 
