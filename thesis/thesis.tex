@@ -117,7 +117,7 @@ The built-in factory calibration error refers to the slight inconsistencies and 
 These errors are characteristic to each device and remain constant over its lifetime, providing a consistent yet unique signature that can be used for fingerprinting.
 We examine proposed mitigation techniques and implement our solution to mitigate fingerprinting, that can be applied to Android application packages.
 Our approach adds random noise to the original sensor values, before they are passed down to the function handling them.
-With the help of the Android Application Patching Pipeline we can apply our patch to any compatible android app.
+With the help of the Android Application Patching Pipeline we can apply our patch to any compatible Android app.
 We evaluate how varying noise levels affect the effectiveness of our obfuscation technique, finding that while increased noise enhances privacy by reducing fingerprintability, it also compromises the usefulness of sensor values.
 We conclude that by adding random noise we mask the consistency of the built-in factory error to make sensor fingerprinting more complicated.
 
@@ -146,7 +146,7 @@ When such data is aggregated, it may lead to a variety of fraudulent activities,
 Fingerprints can be based on various characteristics of the software and hardware configuration of the device, providing a way to distinguish it from other devices.
 Some of the used information is based on the system properties of the device, network, or device configuration by the user \cite{DBLP:journals/popets/KurtzGBRF16}. 
 These properties can include details about the operating system, kernel version, and runtime parameters \cite{DBLP:journals/access/WuWWLY16}.
-Furthermore, details about the Android build version, manufacturer, model, and build fingerprint can be included in the fingerprint. 
+Furthermore, details about the Android build version, manufacturer, model, and build number can be included in the fingerprint. 
 Additionally, separate hardware components, like camera and speaker, can be uniquely fingerprinted \cite{DBLP:journals/tifs/Li10, DBLP:journals/popets/DasBC18}.
 
 In this thesis, we focus on reducing the fingerprintability of sensors.
@@ -274,7 +274,7 @@ One downside of this technique is that it relies on a relatively quiet environme
 
 The accelerometer is ideal for fingerprinting because users often leave their devices still, such as on a desk, allowing for consistent data collection \cite{DBLP:conf/ndss/DeyRXCN14, DBLP:conf/sp/ZhangBS19, DBLP:journals/comsur/BaldiniS17}.
 Unlike audio-based fingerprinting, which needs a known signal, accelerometer fingerprinting relies on passive background measurements taken when the device is stationary.
-When the device is at rest, the acceleration vector should equal the gravitational constant, making detection of sensor imperfections straightforward
+When the device is at rest, the acceleration vector should equal the gravitational constant, making detection of sensor imperfections straightforward.
 To estimate the accelerometer's calibration parameters, measurements are taken with the device facing up and down, then the sensitivity and the offset of the sensor are calculated.
 This method is effective even if the surface is not perfectly level and can be done without user interaction, as devices are often left in both orientations.
 With more data and advanced processing, all six accelerometer parameters can be estimated, improving device identification accuracy.
@@ -476,7 +476,7 @@ Users are empowered to decide if they prefer to prioritize their privacy and acc
 This approach allows individuals to make informed decisions based on their specific needs and privacy concerns, balancing the trade-offs between enhanced privacy and app functionality.
 
 Recognizing the need for a balance between privacy protection and the functional requirements of certain apps, one potential solution is the implementation of a custom permission system. 
-This system could allow specific applications to request direct access to unaltered sensor data, bypassing the obfuscation introduced by the patch, on the users demand, without the need of reinstalling the unpatched version of the software.
+This system could allow specific applications to request direct access to unaltered sensor data, bypassing the obfuscation introduced by the patch, on the user’s demand, without the need of reinstalling the unpatched version of the software.
 This permission system would need to be designed with strict controls to ensure that only trusted applications, which genuinely require precise sensor data, are granted this level of access. 
 Users would be able to review and approve these permissions, giving them full control over which apps can access accurate sensor data and under what circumstances.
 
@@ -529,7 +529,7 @@ This simplicity ensures that even those with limited technical expertise can imp
 
 \chapter{Evaluation}
 \label{chap:evaluation}
-The following sections assess our methodology in terms of functionality, effectiveness, and usability. 
+The following sections assesses our methodology in terms of functionality, effectiveness, and usability. 
 For testing we selected an APK, focusing particularly on applications that heavily utilize sensor data.
 By selecting such applications, we can effectively assess the impact of the patch on sensor data integrity and the overall performance of the app.
 This APK serves as a robust testbed for validating the effectiveness of our patch in obfuscating sensor data and preventing fingerprinting.
@@ -556,7 +556,7 @@ Through this evaluation, we can ensure that the patch introduces the necessary p
 Our testing process involved around ten devices running various versions of Android from 10 to the latest current release of Android 14.
 We applied the patch to each device and monitored its impact on sensor data handling.
 By selecting devices with different hardware configurations we ensured a comprehensive evaluation.
-We recorded sensor values from the accelerometer and gyroscope over extended periods to assess the patch's influence.
+We recorded sensor values from the accelerometer and gyroscope over extended periods to assess the influence of the patch.
 Additionally, we tested various applications to understand how the noise added to sensor data affected functionality and user experience.
 
 \subsection{Functionality}
@@ -564,7 +564,7 @@ Additionally, we tested various applications to understand how the noise added t
 To evaluate the applicability of the patch to existing applications, we selected the simple app \citetitle{SensorBox} as a test case.
 The purpose of this test was to determine whether \citetitle{SensorBox} could successfully receive and process the modified sensor values generated by the applied update.
 Upon implementing the patch, we observed that \citetitle{SensorBox} seamlessly integrated the patched values without encountering any errors or operational issues.
-This successful application demonstrates the patch's compatibility with established applications and suggests its potential for broader adoption in similar mobile software, particularly those reliant on sensor data.
+This successful application demonstrates the compatibility of the patch with established applications and suggests its potential for broader adoption in similar mobile software, particularly those reliant on sensor data.
 
 \begin{figure}[h]
   \centering
@@ -836,7 +836,7 @@ The patch was tested in a limited laboratory setting, which did not sufficiently
 During our testing, the device remained stationary on a table, which does not reflect the dynamic conditions under which mobile devices typically operate.
 This controlled environment allowed us to focus on the fundamental aspects of the patch functionality without the interference of external factors. 
 However, it also means that the testing did not account for variables such as user movement or environmental changes. 
-Consequently, the results obtained from this limited testing environment may not fully represent the patch's performance in real-world usage.
+Consequently, the results obtained from this limited testing environment may not fully represent the performance of the patch in real-world usage.
 
 Despite the limited scope of our testing, we are still convinced of the results of previous studies that state noise generation is a successful method for mitigating fingerprinting.
 These studies provide a solid foundation for our approach, demonstrating that introducing variability into sensor data can effectively prevent the creation of consistent and identifiable fingerprints.
@@ -862,7 +862,7 @@ While the added noise effectively disrupts fingerprinting efforts, it simultaneo
 Excessive noise can impair many applications depending on accurate sensor data for activities such as navigation, environmental monitoring, or gesture recognition, reducing user experience and the app's practical utility.
 Thus, while noise augmentation can provide privacy benefits, it must be carefully balanced against the need to maintain the operational effectiveness of applications.
 
-Furthermore, implementing an additional permission for apps to access unobfuscated sensor data, could provide the user to grant explicit consent on demand, ensuring that user experience is not compromised for applications requiring precise sensor measurements.
+Furthermore, implementing an additional permission for apps to access unobfuscated sensor data, could allow the user to grant explicit consent on demand, ensuring that user experience is not compromised for applications requiring precise sensor measurements.
 By offering this user-controlled flexibility, we could ensure that critical applications can operate without degradation in performance while still protecting against potential privacy breaches.
 This combined strategy of noise generation and user-controlled permissions provides a comprehensive and balanced solution, enhancing privacy without sacrificing the functionality and accuracy required by essential applications. 
 Through this approach, we can significantly increase the difficulty for adversaries attempting to create a consistent fingerprint of devices based on the sensors used. 

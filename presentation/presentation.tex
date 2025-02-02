@@ -5,7 +5,7 @@
 
 % \setbeameroption{hide notes} % only slides
 % \setbeameroption{show only notes} % only notes
-\setbeameroption{show notes on second screen=right} % both
+\setbeameroption{show notes on second screen=right} % bothc
 
 \hypersetup{pdfpagemode=FullScreen}
 
@@ -72,9 +72,9 @@
   \note{
     Lets have a quick look at what we will talk about.
     First we will introduce the topic of fingerprintng different devices and mention some methods used in general.
-    Then go into detail about sensor fingerprinting, and look at the methodology and the approach we applied.
+    Then we will go into detail about sensor fingerprinting, and look at the methodology and the approach we applied.
     We will then present our implementation and show the evaluation steps we took to check if our work is functional.
-    In the end we will discuss the limitations of our implementation.
+    At the end we will discuss the limitations of our implementation.
   }
 \end{frame}
 
@@ -100,21 +100,21 @@
   \end{minipage}
 
   \note<1>{
-    Fingerprints are created by misusing the android api in a way it way not intended to.
-    The android api is used to query different data from the device.
-    Individual data can be requested through the api like it was intended to and used harmlessly.
-    But when a multitude of information about the device is requested and is combined it can be harmful.
-    The combination of these easily accessed information can be unique to a user and his device.
+    Device fingerprints are created by using the android api to collect data about the device and its usage.
+    THe collected data can be for instance, the hardware information or the user configuration.  
+    This data, when requested via the api individually or even in large quantities, does not necessarily create a threat.
+    But when a multitude of information about the device is collected and combined, it can be misused to track users.
+    The combination of all the collected data is a unique fingerprint.
   }
 
   \note<2>{
-    This unique fingerprint can be used to track users and their habbits.
-    This data then can be used for example to create targeted advertisements for individual users.
+    This unique fingerprint can be used to track users and their habits.
+    This data then can be exploited for financial gain, like creating targeted advertisements for individual users.
   }
 
   \note<3>{
-    Many of the required information that are used for the unique fingerprint can be requested through the android api without additional user granted permission.
-    Due to the absence of explicit consent and knowledge of the user these permission less fingerprints create a significant privacy threat.
+    Much of the required information that is used for the unique fingerprint can be requested through the android api without additional user-granted permission.
+    Due to the absence of explicit consent and knowledge of the user, these permissionless fingerprints create a significant privacy threat.
   }
 \end{frame}
 
@@ -128,8 +128,6 @@
       \item Not as known as browser fingerprinting
       \pause
       \item Zero permission identifiers
-      % \pause
-      % \item Personalized configurations
     \end{itemize}
   \end{minipage}
   \hfill
@@ -142,12 +140,13 @@
 
   \note<1>{
     Smartphone fingerprinting is very similar to browser fingerprinting.
-    Browsers can be identified and fingerprinted, by gathering various informations about the screen, installed fonts and extension.
+    Browsers can be identified and fingerprinted by gathering various informations about the screen, installed fonts and extension.
+    Today there are already many well established papers and projects about the mitigation of browser fingerprinting techniques.
   }
 
   \note<2>{
-    Even though browser fingerprinting is similar to browser fingerprinting and just as a privacy threat it is not as widely known.
-    Because it is not as widely known there are currently also a lot less of protections on devices.
+    Even though smartphone fingerprinting is similar to browser fingerprinting and also a privacy threat, it is not as widely known.
+    Because it is not as well known, there is currently also a lot less protection for the devices.
   }
 
   \note<3>{
@@ -164,7 +163,7 @@
     \begin{itemize}
       \item Measurement inaccuracy of sensors
       \pause
-      \item Simple to fingerprint via machine learning algorithmus
+      \item Simple to fingerprint via machine learning algorithm
       \pause
       \item Constant over the sensors lifetime
     \end{itemize}
@@ -180,9 +179,10 @@
   \note<1>{
     The main topic of ours is to focus on sensor fingerprinting.
     These fingerprints are created by reading the sensor values and determining the measurement inaccuracy.
-    This measurement error is created due to the not perfect manufacturing processes of the sensors.
+    This measurement error is created due to the not-perfect manufacturing processes of the sensors.
     Multiple sensors can be used for fingerprinting, such as gyroscopes and accelerometers.
-    These are not the only sensors, that can be used but are already present in nearly all of the mobile devices today and we will focus on these sensors in the following.
+    These are not the only sensors, that can be used but are already present in nearly all of the mobile devices today.
+    This is why we focused our patch on these sensors.
   }
 
   \note<2>{
@@ -191,7 +191,7 @@
   }
 
   \note<3>{
-    It has been already proven by multiple pappers, that these fingerprints based on the builtin sensor error are constant over the lifetime of a sensor.
+    It has been already proven by multiple papers, that these fingerprints based on the builtin sensor error are constant over the lifetime of the device.
     These fingerprints are also unique enough to be used to identify the device they were recorded from.
   }
 \end{frame}
@@ -214,7 +214,7 @@
   \note{
     The main question of us is:
     How to protect against sensor fingerprinting?
-    There have been already some papers that focused on the problem of sensor fingerprinting.
+    There have been already some papers that focused on this problem.
     Some of these also had some proposed solutions to mitigate the privacy risk.
   }
 \end{frame}
@@ -238,9 +238,9 @@
 
   \note{
     There are mainly two proposed solutions.
-    Calibration and noise generation, which each having a different approach.
-    The first we will look at is calibration.
-    We can mitigate the builtin factory imporfections of a sensor by recalibarting it to correct the error.
+    Calibration and noise generation with each having a different approach.
+    The first one we will look at is calibration.
+    We can mitigate the builtin factory imperfections of a sensor by recalibarting it to correct the error.
     Noise geration on the other hand makes the error larger and random by introducing variability into the sensor data to mask the original value.
   }
 \end{frame}
@@ -263,10 +263,11 @@
   \end{minipage}
 
   \note{
-    Both of the proposed solutions have their respective challages.
+    Both of the proposed solutions have their challages.
     Calibration requires user awareness and interaction.
-    They have to actively and precisely calibrate their sensors to get rid of and not just change the sensor imperfections.
-    Noise generation does not require user interaction, but due to the noise and decreased accuracy of the sensor data applications would also decrease their functionality.
+    Users have to actively and precisely calibrate their sensors to get rid of the sensor imperfections and not just change them.
+    Noise generation does not require user interaction.
+    But Due to the noise and decreased accuracy of the sensor data, applications would also decrease their functionality.
     Also in order to introduce the masking noise into the application the code would need to be modified.
   }
 \end{frame}
@@ -290,9 +291,10 @@
   \end{minipage}
 
   \note{
-    Our nethodology uses the proposed noise generation, to mask the builtin error of sensors.
-    We choose this because we believe it to be much easier to scale up then to rely on the users precicion to calibrate their device to perfection.
-    To introduce our custom code responsible for the noise generation we are using the android application pipeline, short a2p2, which enables easy integration into a number of android apps.
+    Our methodology uses the proposed noise generation, to mask the builtin error of sensors.
+    We choose this because we believe it to be much easier to scale up than to rely on the users precision to calibrate their device to perfection.
+    To introduce our custom code responsible for the noise generation we are using the android application patching pipeline, short a2p2.
+    THis enables easy integration into a number of android apps.
   }
 \end{frame}
 
@@ -313,8 +315,9 @@
 
   \note{
     To replace the original sensor values with our masked ones we have to modify the sensor api.
-    We have intercept calls to the registerListener function in order to let our masking class recieve the sensor values instead of the original calling method.
-    Also we will need to implement the onSensorChanged method to pass the recieved sensor value from the system after adding noise to the original calling method.
+    We have intercept calls to the registerListener function.
+    We do this in order to redirect the sensor values sent by the system to our noise generating function.
+    Also we will need to implement the onSensorChanged method to pass the masked sensor value back to the original calling method.
   }
 \end{frame}
 
@@ -335,8 +338,8 @@
   \end{minipage}
 
   \note{
-    In our approach the selected noise generation adds a random gain and offset to every single sensor value, masking the original value with their error.
-    Due to applied noise there will be a loss of precision in the sensor values degrading app functionality.
+    In our approach, the selected noise generation adds a random gain and offset to every single sensor value, masking the built-in factory error.
+    However, we keep in mind, that due to the applied noise there will be a loss of precision in the sensor values, degrading the app functionality.
   }
 \end{frame}
 
@@ -361,16 +364,17 @@
   \end{minipage}
 
   \note<1>{
-    Our implementation has some fundamental methods which ensure the tunctionality of our patch.
-    The first is the intercept method.
+    Our implementation has some fundamental methods which ensure the functionality of our patch.
+    The first one is the intercept method.
   }
 
   \note<2>{
-    An other important part of our implementation is the noise generating function.
+    Another important part of our implementation is the noise generating function.
   }
 
   \note<3>{
-    The most important function is the random value generation function, which ensures the randomnes of the values used for the noise generation to prevent newly created fingerprintable features.
+    The most important function is the random value generation function.
+    Ensuring the randomnes of the used values for the noise generation is important to prevent creating new fingerprintable features.
   }
 \end{frame}
 
@@ -397,18 +401,18 @@
 
   \note{
     The intercept method is responsible for intercepting the sensor values from the system before reaching the original method and forward them to our patch.
-    Our patch then generates and applies noise to this recieved values and passes them to the original method.
+    Our patch then generates and applies noise to these recieved values and passes them to the original method.
   }
 \end{frame}
 
 \againframe<2>{impl}
 
 \begin{frame}{Noise Generating Function}
-  \begin{center}
-    \begin{align*}
-      value_{new} = \frac{(value_{old} - offset_{sensor})}{gain_{sensor}}
-    \end{align*}
-  \end{center}
+  \begin{figure}
+    \centering
+    \[ value_{new} = \frac{(value_{old} - offset_{sensor})}{gain_{sensor}} \]
+    \caption{Function from the paper: Tracking Mobile Web Users Through Motion Sensors: Attacks and Defenses}
+  \end{figure}
 
   \note{
     By subtracting a random offset and divinding a random gain from the original value we genarate the new obfuscated sensor value.
@@ -441,7 +445,7 @@
   \note{
     The application of our patch is very straightforward.
     We only need to install JAVA runtime environment and download the latest a2p2 release and the apk of the app the we want to patch.
-    If all these reqirements are met the app can be patched by executing a simple single command.
+    If all these reqirements are met, the app can be patched by executing a simple single line command.
   }
 \end{frame}
 
@@ -465,17 +469,19 @@
   \end{minipage}
 
   \note<1>{
-    To determine if our patch mitigates fingerprintability we have to perform some tests.
-    To check the functionality of our patch and controll that sensor values are intercepted and modified before passing them to the original function.  
+    To determine if our patch mitigates fingerprintability we had to perform some tests.
+    First we had to determine the functionality of our patch.
   }
 
   \note<2>{
-    Then we have to check the effectiveness of our patch in mitigating fingerprintability.
+    Then we had to check the effectiveness of our patch in mitigating fingerprintability.
   }
 
   \note<3>{
     We also tested if the patched apps retained their functionality and usabilty.
-    To test this we patched a motion controlled game and were still able to play the game without significant problems.
+    To test this we patched a motion controlled game and played for a while.
+    We were still able to play the game without significant problems.
+    There was only a slightly noticable shaking of our motion controlled character.
   }
 \end{frame}
 
@@ -497,9 +503,11 @@
   \end{minipage}
 
   \note{
-    We do this by recording sensor values over a small period of time with an android app.
-    Then we apply our patch to the app we used to record the values and compare the recorded results.
-    As we can see the recorded sensor values were constant before the patch but got inconsistant after the application of our patch.
+    To check the functionality of our patch we had to prove that sensor values are intercepted and modified before passing them to the original function.  
+    We did this by recording sensor values over a small period of time with an android app.
+    Then we applied our patch to the app we used to record the values and compare the recorded results.
+    As we can see on the left figure, the recorded sensor values were constant before the patch. 
+    After the introduction of the patch as seen in the right figure, the values got inconsistant.
   }
 \end{frame}
 
@@ -523,10 +531,11 @@
   \end{minipage}
 
   \note{
-    To test this we trained a knn machine leaarning model with the recorded sensor values before and after the application of our patch.
-    We can observe that before our patch the decision boundaries of the trained model were very prominant and easily differentiable.
+    To test this we trained a k-nearest neighbour machine leaarning model with the recorded sensor values before and after the application of our patch.
+    We can observe that before our patch the decision boundaries of the trained model were very prominent and easily differentiable, as it can be observed in the first figure.
     This lead to 100\% accuracy in the predictions of the model.
-    After our patch the decision boundaries were not that easily distinguisable and the trained models accuracy decreased noticably.
+    After our patch the decision boundaries were not that easily distinguisable as shown in the second figure.
+    Tnis led to a noticable decrease in accuracy of our trained model.
   }
 \end{frame}
 
@@ -548,9 +557,10 @@
   \end{minipage}
 
   \note{
-    We also evaluated the level of the applied noise.
+    We also evaluated the level of the applied noise, by testing different noise levels.
     Increasing the nosie we noticed it decreased the fingerprintability, but also decreased the apps functionality significantly.
-    We have to balance the level of the applied nosie in order to have the most effective mitigation of fingerprinting but stil retaining the apps functionality.
+    In order to retain functionality of the patched apps we have to be carefull in the selection of the noise level.
+    We have to balance the level of the applied noise in order to have the most effective mitigation of fingerprinting but keeping the apps usable.
   }
 \end{frame}
 
@@ -572,8 +582,10 @@
   \end{minipage}
 
   \note{
-    Our test was done with a limited number of devices in a controlled environment.
-    But we are confident that based on our findings and other pubished papers our patch would also mitigate sensor fingerprintability on a larger scale in an everyday environment.
+    Due to the range of our testing we only have limited proof of our patch currently.
+    Our test was performed only with a limited number of devices in a controlled environment.
+    But we are confident that our patch would also make sensor fingerprinting more complicated on a larger scale in an everyday environment.
+    Our confidence is based on our findings and other pubished papers.
   }
 \end{frame}
 
@@ -596,7 +608,7 @@
 
   \note{
     We believe that our implementation of androguard is a possible solution to lower privacy violations.
-    By easily applying our patch to applications and masking the builtin error of sensors with added nosie we mitigate sensor fingerprinting on android.
+    By easily applying our patch to applications and masking the builtin error of sensors with added noise, we mitigate sensor fingerprinting on android.
   }
 \end{frame}
 
