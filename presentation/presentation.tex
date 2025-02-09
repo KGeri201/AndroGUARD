@@ -71,7 +71,7 @@
 
   \note{
     Lets have a quick look at what we will talk about.
-    First we will introduce the topic of fingerprintng different devices and mention some methods used in general.
+    First we will introduce the topic of fingerprinting different devices and mention some methods used in general.
     Then we will go into detail about sensor fingerprinting, and look at the methodology and the approach we applied.
     We will then present our implementation and show the evaluation steps we took to check if our work is functional.
     At the end we will discuss the limitations of our implementation.
@@ -101,7 +101,7 @@
 
   \note<1>{
     Device fingerprints are created by using the android api to collect data about the device and its usage.
-    THe collected data can be for instance, the hardware information or the user configuration.  
+    The collected data can be for instance, the hardware information or the user configuration.  
     This data, when requested via the api individually or even in large quantities, does not necessarily create a threat.
     But when a multitude of information about the device is collected and combined, it can be misused to track users.
     The combination of all the collected data is a unique fingerprint.
@@ -151,7 +151,7 @@
 
   \note<3>{
     To create a fingerprint of a mobile device in many cases zero permission identifiers are used.
-    These can be information about the device, configurations and different sensors.
+    These can be information about the device, configurations and different sensors, which do not require elevated permissions to access.
   }
 \end{frame}
 
@@ -267,7 +267,7 @@
     Calibration requires user awareness and interaction.
     Users have to actively and precisely calibrate their sensors to get rid of the sensor imperfections and not just change them.
     Noise generation does not require user interaction.
-    But Due to the noise and decreased accuracy of the sensor data, applications would also decrease their functionality.
+    But due to the noise and decreased accuracy of the sensor data, applications would also decrease their functionality.
     Also in order to introduce the masking noise into the application the code would need to be modified.
   }
 \end{frame}
@@ -294,7 +294,7 @@
     Our methodology uses the proposed noise generation, to mask the builtin error of sensors.
     We choose this because we believe it to be much easier to scale up than to rely on the users precision to calibrate their device to perfection.
     To introduce our custom code responsible for the noise generation we are using the android application patching pipeline, short a2p2.
-    THis enables easy integration into a number of android apps.
+    This enables easy integration into a number of android apps.
   }
 \end{frame}
 
@@ -339,7 +339,7 @@
 
   \note{
     In our approach, the selected noise generation adds a random gain and offset to every single sensor value, masking the built-in factory error.
-    However, we keep in mind, that due to the applied noise there will be a loss of precision in the sensor values, degrading the app functionality.
+    However, we have to keep in mind, that due to the applied noise there will be a loss of precision in the sensor values, degrading the app functionality.
   }
 \end{frame}
 
@@ -373,7 +373,7 @@
   }
 
   \note<3>{
-    The most important function is the random value generation function.
+    The most important function is the random value generator function.
     Ensuring the randomnes of the used values for the noise generation is important to prevent creating new fingerprintable features.
   }
 \end{frame}
@@ -416,7 +416,7 @@
 
   \note{
     By subtracting a random offset and divinding a random gain from the original value we genarate the new obfuscated sensor value.
-    The random values of the offset and gain are generated from a carefully selected range responsible for the amplitude of the nosie.
+    The random values of the offset and gain are generated from a carefully selected range responsible for the amplitude of the noise.
   }
 \end{frame}
 
@@ -425,7 +425,6 @@
 \begin{frame}{Application of Patch}
   \begin{minipage}{0.49\textwidth} 
     \begin{itemize}
-      \item Straightforward application 
       \item Only requirements are
       \begin{itemize}
         \item JAVA JRE
@@ -441,6 +440,10 @@
       \includegraphics[height=0.5\textheight]{figures/download.png}
     \end{figure}
   \end{minipage}
+
+  \begin{center}
+    \texttt{java -jar a2p2.jar <app>.apk ! unpack ! apply patch.zip static ! pack ! sign ! ./}
+  \end{center}
 
   \note{
     The application of our patch is very straightforward.
@@ -531,11 +534,11 @@
   \end{minipage}
 
   \note{
-    To test this we trained a k-nearest neighbour machine leaarning model with the recorded sensor values before and after the application of our patch.
+    To test this we trained a k-nearest neighbour machine learning model with the recorded sensor values before and after the application of our patch.
     We can observe that before our patch the decision boundaries of the trained model were very prominent and easily differentiable, as it can be observed in the first figure.
     This lead to 100\% accuracy in the predictions of the model.
     After our patch the decision boundaries were not that easily distinguisable as shown in the second figure.
-    Tnis led to a noticable decrease in accuracy of our trained model.
+    This led to a noticable decrease in accuracy of our trained model.
   }
 \end{frame}
 
