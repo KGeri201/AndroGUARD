@@ -60,6 +60,3 @@ The validation of the patch is done by splitting the gathered data, and training
 
 ## License
 [MIT License](LICENSE)
-
-## Project status
-Completed.
