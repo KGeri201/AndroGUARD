@@ -24,7 +24,7 @@ Patching apps with the created mechanism, using the [A2P2 Framework](https://ext
 
   - Presentation on 20.02.2025
 
-  - Completed on ...
+  - Completed on 20.02.2025
 
 ## Concept
 
