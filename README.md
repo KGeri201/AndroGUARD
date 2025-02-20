@@ -6,6 +6,8 @@ Patching apps with the created mechanism, using the [A2P2 Framework](https://ext
 
 ## Description
 
+**University**:      TU Graz - Graz University of Technology
+
 **Student**:         Gergö Kranz
 
 **Study programme**: Software Engineering and Management
@@ -60,4 +62,4 @@ The validation of the patch is done by splitting the gathered data, and training
 [MIT License](LICENSE)
 
 ## Project status
-In development.
+Completed.
